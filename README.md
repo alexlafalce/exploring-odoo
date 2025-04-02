@@ -5,6 +5,11 @@ This repository contains source codes presented in youtube channel [Exploring Od
 # Nuido Branch
 This branch is specific for Nuido related modules.
 
+> [!NOTE]
+> This branch requires you to be comfortable with Odoo frameworks such ash the ORM, OWL, Qweb, etc. You don't need to be an expert, but you still need to understand the basics.
+>
+> In other words, this branch is not for total beginners. Although the codes are still beginner friendly, i.e., no advanced techniques, the concepts presented in this branch can be overwhelming and confusing for a total beginner.
+
 > [!CAUTION]
 > Everything in this repo is purely experimental and for educational purpose use only.
 >
@@ -38,9 +43,21 @@ This branch is specific for Nuido related modules.
 > If you're having trouble with the code, ask politely and nicely like a civil person.
 >
 
+>[!WARNING]
+> Most of the client-side part of the addons/modules in this branch are created using typescript.
+> Currently, I have no plan to publish the typescript files.
+>
+> The transpiled javascript files are provided so you can still use and study the modules.
+>
+
+>[!CAUTION]
+> This branch is currently in active development, while the core/basic concepts doesn't change, the codes are expected to be changed depending on the issues I encounter while creating the video for them.
+
 ## Please keep this repo alive by giving it a star and sharing it.
 
 # Experimental Odoo Modules
 
-| Name               | Folder                 | Description                                                                    |
-| ------------------ | ---------------------- | ------------------------------------------------------------------------------ |
+| Name         | Folder       | Description                                                |
+| ------------ | ------------ | ---------------------------------------------------------- |
+| AI Chat Base | ai_chat_base | This module provides the base to create streaming AI chat. |
+| Nuido        | nuido        | Node based UI for Odoo                                     |

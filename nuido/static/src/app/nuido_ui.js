@@ -1,0 +1,292 @@
+import { Component, EventBus, onWillUpdateProps, useRef, useState, useSubEnv } from "@odoo/owl";
+import { useService, useBus } from "@web/core/utils/hooks";
+import { isOverlap, useMouseListener } from "@nuido/utils/utils";
+import { Document } from "@nuido/components/document";
+import { DebugEventType, EdgeTypeEventType } from "@nuido/components/events";
+import { Default } from "@nuido/utils/registry";
+export class NuidoUi extends Component {
+    static template = "nuido.nuido-ui";
+    static components = { Document };
+    static props = {
+        bus: { type: EventBus, optional: true },
+        channel: { type: String, optional: true },
+        edgeType: { type: String, optional: true },
+        documents: { type: (Array), optional: true },
+        slots: { type: Object, optional: true }
+    };
+    static defaultProps = {
+        bus: new EventBus,
+        channel: "nuido",
+        edgeType: Default,
+        documents: []
+    };
+    ui;
+    nodeUiRef;
+    state;
+    selectionState;
+    startSelectionRect;
+    onHandleMouseDown;
+    isMoving;
+    lastPointerPos;
+    setup() {
+        this.ui = useService("ui");
+        this.nodeUiRef = useRef("nuido");
+        this.onHandleMouseDown = useMouseListener({
+            onMouseDown: this.onMouseDown,
+            onMouseMove: this.onMouseMove,
+            onMouseUp: this.onMouseUp,
+        });
+        this.lastPointerPos = undefined;
+        this.isMoving = false;
+        const nuidoEnv = {
+            bus: this.props.bus,
+            channel: this.props.channel,
+            ui: {
+                zoom_max: 2,
+                zoom_min: 0.6,
+                zoom_value: 0.1,
+                last_zoom: 1,
+                translateX: 0,
+                translateY: 0,
+                zoom: 1
+            },
+            documents: this.props.documents
+        };
+        useSubEnv(nuidoEnv);
+        this.state = useState({
+            env: nuidoEnv,
+            edgeType: this.props.edgeType,
+        });
+        this.selectionState = useState({
+            selecting: false,
+            x: 0,
+            y: 0,
+            w: 0,
+            h: 0,
+            nodeElements: [],
+            pathElements: []
+        });
+        this.startSelectionRect = {
+            x: 0,
+            y: 0,
+            w: 0,
+            h: 0,
+        };
+        onWillUpdateProps((np) => {
+            this.state.edgeType = np.edgeType;
+        });
+        useBus(this.env.bus, this.env.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */, this.zoom_reset.bind(this));
+    }
+    onSelection(entries, observer) {
+        console.log(entries);
+    }
+    get documents() {
+        return this.state.env.documents;
+    }
+    get currentDoc() {
+        return this.state.env.documents[this.state.env.documents.length - 1];
+    }
+    get currentDocSessionId() {
+        const currentDocId = this.currentDoc.id;
+        const currentSessionId = this.currentDoc.sessionId;
+        return currentDocId + "-" + currentSessionId;
+    }
+    deleteSelected() {
+        this.state.env.bus.trigger(this.state.env.channel + "/delete" /* DocumentEventType.delete */);
+    }
+    reset() {
+        this.state.env.bus.trigger(this.state.env.channel + "/reset" /* DocumentEventType.reset */);
+    }
+    clearSelection() {
+        this.state.env.bus.trigger(this.state.env.channel + "/clear" /* SelectionEventType.clear */);
+    }
+    updateEdgeType() {
+        this.state.env.bus.trigger(this.state.env.channel + EdgeTypeEventType, {
+            edgeType: this.state.edgeType
+        });
+    }
+    onKeydown(event) {
+        if (event.key === "Delete" && event.ctrlKey) {
+            event.preventDefault();
+            event.stopPropagation();
+            this.deleteSelected();
+        }
+    }
+    onMouseDown(event) {
+        if (event.shiftKey) {
+            const nuidoDocEl = document.getElementsByClassName("nuido-doc")[0];
+            const nodeEls = nuidoDocEl.getElementsByClassName("node");
+            const pathEls = nuidoDocEl.getElementsByClassName("path");
+            const pos = {
+                x: event.x,
+                y: event.y,
+                w: 0,
+                h: 0,
+            };
+            const sel = {
+                selecting: true,
+                x: event.x,
+                y: event.y,
+                nodeElements: nodeEls,
+                pathElements: pathEls,
+            };
+            Object.assign(this.startSelectionRect, pos);
+            Object.assign(this.selectionState, sel, pos);
+        }
+    }
+    onMouseMove(event) {
+        if (event.ctrlKey) {
+            event.stopPropagation();
+            event.preventDefault();
+            if (this.lastPointerPos) {
+                if (this.isMoving || Math.hypot(event.x - this.lastPointerPos.x, event.y - this.lastPointerPos.y) >= 20) {
+                    document.documentElement.style.cursor = "move";
+                    this.state.env.ui.translateX = this.state.env.ui.translateX + event.movementX;
+                    this.state.env.ui.translateY = this.state.env.ui.translateY + event.movementY;
+                    const doc = document.querySelector(".nuido-doc");
+                    doc.style.transform =
+                        "translate(" +
+                            this.state.env.ui.translateX +
+                            "px, " +
+                            this.state.env.ui.translateY +
+                            "px) scale(" +
+                            this.state.env.ui.zoom +
+                            ")";
+                    this.isMoving = true;
+                }
+            }
+            else {
+                this.lastPointerPos = {
+                    x: event.x,
+                    y: event.y
+                };
+            }
+        }
+        else if (event.shiftKey) {
+            if (this.selectionState.selecting) {
+                const eventRect = {
+                    x: event.x > this.startSelectionRect.x ? this.startSelectionRect.x : event.x,
+                    y: event.y > this.startSelectionRect.y ? this.startSelectionRect.y : event.y,
+                    w: Math.abs(event.x - this.startSelectionRect.x),
+                    h: Math.abs(event.y - this.startSelectionRect.y),
+                };
+                Object.assign(this.selectionState, eventRect);
+                const left = this.selectionState.x;
+                const top = this.selectionState.y;
+                const width = this.selectionState.w;
+                const height = this.selectionState.h;
+                const nodeEls = this.selectionState.nodeElements;
+                const pathEls = this.selectionState.pathElements;
+                for (let i = 0; i < nodeEls.length; i++) {
+                    const rect = nodeEls[i].getBoundingClientRect();
+                    if (isOverlap(left, top, width, height, rect.left, rect.top, rect.width, rect.height)) {
+                        this.env.bus.trigger(this.env.channel + "/select" /* SelectionEventType.select */, {
+                            id: nodeEls[i].id,
+                            type: "node" /* SelectionType.node */
+                        });
+                    }
+                    else {
+                        this.env.bus.trigger(this.env.channel + "/unselect" /* SelectionEventType.unselect */, {
+                            id: nodeEls[i].id,
+                            type: "node" /* SelectionType.node */
+                        });
+                    }
+                }
+                for (let i = 0; i < pathEls.length; i++) {
+                    const rect = pathEls[i].getBoundingClientRect();
+                    if (isOverlap(left, top, width, height, rect.left, rect.top, rect.width, rect.height)) {
+                        this.env.bus.trigger(this.env.channel + "/select" /* SelectionEventType.select */, {
+                            id: pathEls[i].id,
+                            type: "edge" /* SelectionType.edge */
+                        });
+                    }
+                    else {
+                        this.env.bus.trigger(this.env.channel + "/unselect" /* SelectionEventType.unselect */, {
+                            id: pathEls[i].id,
+                            type: "edge" /* SelectionType.edge */
+                        });
+                    }
+                }
+            }
+        }
+    }
+    onMouseUp(event) {
+        event.stopPropagation();
+        event.preventDefault();
+        document.documentElement.style.cursor = "default";
+        this.lastPointerPos = undefined;
+        this.isMoving = false;
+        if (this.selectionState.selecting) {
+            const pos = {
+                x: 0,
+                y: 0,
+                w: 0,
+                h: 0,
+            };
+            const sel = {
+                selecting: false,
+                nodeElements: [],
+                edgeElements: [],
+            };
+            Object.assign(this.startSelectionRect, pos);
+            Object.assign(this.selectionState, sel, pos);
+        }
+    }
+    onWheel(event) {
+        if (event.ctrlKey) {
+            if (event.deltaY > 0) {
+                this.zoom_out();
+            }
+            else {
+                this.zoom_in();
+            }
+        }
+    }
+    change_translation() {
+        this.state.env.ui.translateX = (this.state.env.ui.translateX / this.state.env.ui.last_zoom)
+            * this.state.env.ui.zoom;
+        this.state.env.ui.translateY = (this.state.env.ui.translateY / this.state.env.ui.last_zoom)
+            * this.state.env.ui.zoom;
+        this.state.env.ui.last_zoom = this.state.env.ui.zoom;
+        const doc = document.querySelector(".nuido-doc");
+        doc.style.transform =
+            "translate(" +
+                this.state.env.ui.translateX +
+                "px, " +
+                this.state.env.ui.translateY +
+                "px) scale(" +
+                this.state.env.ui.zoom +
+                ")";
+        this.state.env.bus.trigger(this.state.env.channel + "/translation_changed" /* NuidoEventType.translation_changed */, {
+            translateX: this.state.env.ui.translateX,
+            translateY: this.state.env.ui.translateY,
+            zoom: this.state.env.ui.zoom
+        });
+    }
+    zoom_in() {
+        if (this.state.env.ui.zoom < this.state.env.ui.zoom_max) {
+            this.state.env.ui.zoom += this.state.env.ui.zoom_value;
+            this.change_translation();
+        }
+    }
+    zoom_out() {
+        if (this.state.env.ui.zoom > this.state.env.ui.zoom_min) {
+            this.state.env.ui.zoom -= this.state.env.ui.zoom_value;
+            this.change_translation();
+        }
+    }
+    zoom_reset() {
+        if (this.state.env.ui.zoom != 1 || this.state.env.ui.translateX != 0 || this.state.env.ui.translateY != 0) {
+            this.state.env.ui.translateX = 0;
+            this.state.env.ui.translateY = 0;
+            this.state.env.ui.zoom = 1;
+            this.change_translation();
+        }
+    }
+    get zoom() {
+        return Math.round((this.state.env.ui.zoom + Number.EPSILON) * 100) / 100;
+    }
+    debug() {
+        this.state.env.bus.trigger(this.state.env.channel + DebugEventType);
+    }
+}

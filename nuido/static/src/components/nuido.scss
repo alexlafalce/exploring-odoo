@@ -1,0 +1,245 @@
+$nuido-border-color: $gray-700 !default;
+
+$nuido-background-color: $gray-900 !default;
+$nuido-background-dot-color: $gray-700 !default;
+$nuido-background-size: 20px !default;
+$nuido-background-image: radial-gradient(circle at 1px 1px, $nuido-background-dot-color 1px, transparent 0px) !default;
+
+$nuido-node-background-color: $gray-800 !default;
+$nuido-node-border-color: $gray-700 !default;
+$nuido-node-color: $gray-400 !default;
+
+$nuido-node-border-width: 3px !default;
+
+$nuido-node-title-bottom-color: $gray-600 !default;
+$nuido-node-selected-background-color: $nuido-node-background-color !default;
+$nuido-node-selected-border-color: $o-brand-primary !default;
+
+$nuido-node-hover-background-color: $nuido-node-background-color !default;
+$nuido-node-hover-border-color: $gray-500 !default;
+
+$nuido-port-border-color: $nuido-node-border-color !default;
+$nuido-port-border-width: 3px !default;
+$nuido-input-port-background-color: $blue-900 !default;
+$nuido-ouput-port-background-color: $orange-900 !default;
+$nuido-aux-in-port-background-color: $blue-900 !default;
+$nuido-aux-out-port-background-color: $orange-900 !default;
+
+$nuido-path-width: 3px !default;
+$nuido-path-color: $gray-700 !default;
+$nuido-path-hover-color: $gray-500 !default;
+$nuido-path-selected-color: $o-brand-primary !default;
+
+$nuido-joint-border-color: $gray-500 !default;
+$nuido-joint-background-color: $gray-800 !default;
+
+.nuido-root:focus-visible {
+    outline: none;
+}
+
+.nuido-selection {
+    border: $gray-500 dashed 1px;
+}
+
+.nuido {
+    background-color: $nuido-background-color;
+    background-size: $nuido-background-size $nuido-background-size;
+    background-image: $nuido-background-image;
+    border: $nuido-border-color dashed 1px;
+
+    .nuido-doc-container {
+        display: flex;
+        overflow: hidden;
+        touch-action: none;
+        outline: $nuido-border-color solid 1px;
+
+        .nuido-doc {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            user-select: none;
+            perspective: 0;
+            // border: $nuido-border-color dashed 1px;
+
+            .node-container {
+                position: relative;
+
+                .node, .node.sectioned {
+                    display: flex;
+                    align-items: center;
+                    position: absolute;
+                    min-height: 40px;
+                    min-width: 100px;
+                    z-index: 2;
+                    padding: 10px;
+                    border-radius: 4px;
+                    background: $nuido-node-background-color;
+                    border: $nuido-node-border-width solid $nuido-node-border-color;
+                    color: $nuido-node-color;
+
+
+                    .content {
+                        height: 100%;
+                        width: 100%;
+                        display: flex;
+                        flex-direction: column;
+                        margin-right: -12px;
+
+                        .node-title {
+                            padding-top: 5px;
+                            padding-bottom: 3px;
+                            border-bottom: $nuido-node-title-bottom-color solid 1px;
+
+                            .node-icon {
+                                max-height: 24px;
+                                max-width: 100%;
+                                width: auto;
+                                filter: invert(0.80);
+                            }
+                        }
+
+                        .node-title:hover {
+                            cursor: move;
+                        }
+
+                        .node-content {
+                            padding-top: 3px;
+                            padding-bottom: 3px;
+
+                            .node-sections {
+                                display: flex;
+                                flex-direction: column;
+
+                                .node-section {
+                                    display: flex;
+
+                                    .node-section-content {
+                                        width: 100%;
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
+                    %port-container {
+                        position: relative;
+                    }
+
+                    .input-container {
+                        @extend %port-container;
+                        left: -19px;
+                    }
+
+                    .input-container:has(> :last-child:nth-child(n)):has(+ .content) + .content{
+                        margin-left: -12px;
+                    }
+
+                    .output-container {
+                        @extend %port-container;
+                        right: -19px;
+                    }
+
+                    %aux-container {
+                        position: absolute;
+                        left: auto;
+                        align-self: center;
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .aux-in-container {
+                        @extend %aux-container;
+                        bottom: -17px;
+                    }
+
+                    .aux-out-container {
+                        @extend %aux-container;
+                        top: -17px;
+                    }
+
+                    %port {
+                        width: 15px;
+                        height: 15px;
+                        border-radius: 50%;
+                        cursor: crosshair;
+                        z-index: 1;
+                        border: $nuido-port-border-width solid $nuido-port-border-color;
+                    }
+
+                    .input {
+                        @extend %port;
+                        background: $nuido-input-port-background-color;
+                    }
+
+                    .output {
+                        @extend %port;
+                        background: $nuido-ouput-port-background-color;
+                    }
+
+                    .aux-in {
+                        @extend %port;
+                        border-radius: 10%;
+                        transform: rotate(45deg);
+                        background: $nuido-aux-in-port-background-color;
+                    }
+
+                    .aux-out {
+                        @extend %port;
+                        border-radius: 10%;
+                        transform: rotate(45deg);
+                        background: $nuido-aux-out-port-background-color;
+                    }
+                }
+
+                .node:hover {
+                    background: $nuido-node-hover-background-color;
+                    border: $nuido-node-border-width solid $nuido-node-hover-border-color;
+                }
+
+                .node.selected {
+                    background: $nuido-node-selected-background-color;
+                    border: $nuido-node-border-width solid $nuido-node-selected-border-color;
+                }
+            }
+
+            svg.edge {
+                z-index: 0;
+                overflow: visible !important;
+                position: absolute;
+                pointer-events: none;
+                aspect-ratio: 1 / 1;
+
+                .path {
+                    fill: none;
+                    stroke-width: $nuido-path-width;
+                    stroke: $nuido-path-color;
+                    pointer-events: all;
+                }
+
+                .path:hover {
+                    stroke: $nuido-path-hover-color;
+                    cursor: pointer;
+                }
+
+                .path.selected {
+                    stroke: $nuido-path-selected-color;
+                }
+
+                .joint {
+                    cursor: move;
+                    stroke: $nuido-joint-border-color;
+                    stroke-width: 1;
+                    fill: $nuido-joint-background-color;
+                    pointer-events: all;
+                }
+            }
+
+            svg.edge.new-edge {
+                .path:hover {
+                    stroke: $nuido-path-color;
+                }
+            }
+        }
+    }
+}

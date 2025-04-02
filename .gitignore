@@ -171,5 +171,8 @@ tortoise/
 .vscode/
 
 # Typescript
+@types/
 ts/
 *.ts
+package.json
+tsconfig.json

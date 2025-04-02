@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="nuido.port">
+        <div t-ref="root" t-att-id="props.port.id"
+            t-att-class="cssClass"
+            t-on-mousedown.stop.prevent="onMouseDown" t-on-mouseup.stop.prevent="onMouseUp" >
+        </div>
+    </t>
+</templates>

@@ -5,6 +5,15 @@ This repository contains source codes presented in youtube channel [Exploring Od
 # Nuido Branch
 This branch is specific for Nuido related modules.
 
+Nuido is a library to create node based user interface for Odoo.
+Currently there are two experiments based on Nuido:
+## Nuido AI: AI Chat Studio for Odoo
+   ![Nuido AI](doc/images/nuidoai.png)
+## Nuido Flow: Automation for Odoo
+   ![Nuido Flow](doc/images/nuido-flow.png)
+
+Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more information.
+
 > [!NOTE]
 > This branch requires you to be comfortable with Odoo frameworks such ash the ORM, OWL, Qweb, etc. You don't need to be an expert, but you still need to understand the basics.
 >

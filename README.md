@@ -1,9 +1,10 @@
 # Exploring Odoo
+This repository contains source codes presented in youtube channel [Exploring Odoo](https://www.youtube.com/@exploring-odoo)
+
 ## Please keep this repo alive by giving it a star and sharing it.
 Click the star button on the right top to show your support.
 ![Nuido AI](doc/images/starme.png)
 
-This repository contains source codes presented in youtube channel [Exploring Odoo](https://www.youtube.com/@exploring-odoo)
 
 # Nuido Branch
 This branch is specific for Nuido related modules.

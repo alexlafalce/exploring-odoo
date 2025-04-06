@@ -1,4 +1,7 @@
 # Exploring Odoo
+## Please keep this repo alive by giving it a star and sharing it.
+Click the star button on the right top to show your support.
+![Nuido AI](doc/images/starme.png)
 
 This repository contains source codes presented in youtube channel [Exploring Odoo](https://www.youtube.com/@exploring-odoo)
 

@@ -1,3 +1,7 @@
+// THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+// THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+
 import { Component, useRef } from "@odoo/owl";
 import { useBus } from "@web/core/utils/hooks";
 import { useDraggable } from "@nuido/utils/utils";

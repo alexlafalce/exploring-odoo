@@ -1,3 +1,7 @@
+// THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+// THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+
 import { reactive, onWillUnmount, useComponent } from "@odoo/owl";
 import { useDebounced } from "@web/core/utils/timing";
 import { makeDraggableHook } from "@web/core/utils/draggable_hook_builder_owl";

@@ -1,10 +1,14 @@
+// THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+// THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+
 import { Component, useRef, onMounted, onWillUnmount } from "@odoo/owl";
 import { useBus } from "@web/core/utils/hooks";
 import { useDebounced, useThrottleForAnimation } from "@web/core/utils/timing";
 import { registry } from "@web/core/registry";
 import { uuidv4 } from "@nuido/utils/utils";
 import { Edge } from "@nuido/components/edge";
-import { DebugEventType, EdgeTypeEventType } from "@nuido/components/events";
+import { DebugEventType, EdgeTypeEventType, AdjustEdgeEndpointEventType } from "@nuido/components/events";
 import { DocumentModel } from "@nuido/models/document";
 import { NuidoNodeRegistryName } from "@nuido/utils/registry";
 export class Document extends Component {
@@ -26,6 +30,7 @@ export class Document extends Component {
         useBus(this.env.bus, this.env.channel + "/clear" /* SelectionEventType.clear */, this.onClearSelected.bind(this));
         useBus(this.env.bus, this.env.channel + "/edge-start" /* NewEdgeEventType.start */, this.onStartConnect.bind(this));
         useBus(this.env.bus, this.env.channel + "/edge-complete" /* NewEdgeEventType.complete */, this.onCompleteConnect.bind(this));
+        useBus(this.env.bus, this.env.channel + AdjustEdgeEndpointEventType, this.onAdjustEdgeEndpoint.bind(this));
         useBus(this.env.bus, this.env.channel + DebugEventType, this.onDebug.bind(this));
         this.onMouseUp = useDebounced(this.onMouseUp, "animationFrame");
         this.onMouseMove = useThrottleForAnimation(this.onMouseMove);
@@ -44,6 +49,7 @@ export class Document extends Component {
     onEdgeTypeChanged(event) {
         const doc = this.props.document;
         doc.edgeType = event.detail.edgeType;
+        doc.auxEdgeType = event.detail.auxEdgeType;
     }
     getNodeComponent(nodeType) {
         const res = registry.category(NuidoNodeRegistryName).get(nodeType).component;
@@ -114,15 +120,30 @@ export class Document extends Component {
     onStartConnect(event) {
         const id = uuidv4();
         const portId = event.detail.id;
+        const direction = event.detail.direction;
         const nodeId = event.detail.nodeId;
         const doc = this.props.document;
-        doc.prepareEdge(id, doc.edgeType, portId, nodeId, event.detail.x, event.detail.y);
+        let edgeType;
+        if (direction === "output" /* PortDirection.out */) {
+            edgeType = doc.edgeType;
+        }
+        else {
+            edgeType = doc.auxEdgeType;
+        }
+        doc.prepareEdge(id, edgeType, portId, nodeId, event.detail.x, event.detail.y);
     }
     onCompleteConnect(event) {
         const portId = event.detail.id;
         const nodeId = event.detail.nodeId;
         const doc = this.props.document;
         doc.completeEdge(portId, nodeId, event.detail.x, event.detail.y);
+    }
+    onAdjustEdgeEndpoint(event) {
+        const portId = event.detail.id;
+        const nodeId = event.detail.nodeId;
+        const direction = event.detail.direction;
+        const doc = this.props.document;
+        doc.adjustEdgeEndpoint(portId, direction, nodeId, event.detail.x, event.detail.y);
     }
     onMouseMove(event) {
         const doc = this.props.document;

@@ -1,3 +1,7 @@
+// THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+// THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+
 import { registry } from "@web/core/registry";
 import { omit } from "@web/core/utils/objects";
 import { NuidoEdgeRegistryName, NuidoNodeRegistryName } from "@nuido/utils/registry";
@@ -18,6 +22,7 @@ export class DocumentModel {
     edges;
     newEdge;
     edgeType;
+    auxEdgeType;
     selected;
     constructor(id, sessionId, title) {
         this.id = id;
@@ -29,6 +34,7 @@ export class DocumentModel {
         this.selected = [];
         this.newEdge = undefined;
         this.edgeType = undefined;
+        this.auxEdgeType = undefined;
     }
     _addNode(id, icon, title, nodeType, left, top) {
         const nodeRegistry = registry.category(NuidoNodeRegistryName).get(nodeType);
@@ -194,6 +200,89 @@ export class DocumentModel {
     }
     clearNewEdge() {
         this.newEdge = undefined;
+    }
+    adjustEdgeEndpoint(portId, direction, nodeId, x, y) {
+        const node = this.nodes.find(o => o.id == nodeId);
+        if (node) {
+            if (direction === "input" /* PortDirection.in */) {
+                const port = node.inPorts.find(o => o.id == portId);
+                if (port) {
+                    for (let i = 0; i < port.links.length; i++) {
+                        Object.assign(port.links[i].vprops, {
+                            endX: x,
+                            endY: y
+                        });
+                    }
+                }
+            }
+            else if (direction === "output" /* PortDirection.out */) {
+                const port = node.outPorts.find(o => o.id == portId);
+                if (port) {
+                    for (let i = 0; i < port.links.length; i++) {
+                        Object.assign(port.links[i].vprops, {
+                            startX: x,
+                            startY: y
+                        });
+                    }
+                }
+            }
+            else if (direction === "aux-in" /* PortDirection.auxIn */) {
+                const port = node.auxInPorts.find(o => o.id == portId);
+                if (port) {
+                    for (let i = 0; i < port.links.length; i++) {
+                        Object.assign(port.links[i].vprops, {
+                            endX: x,
+                            endY: y
+                        });
+                    }
+                }
+            }
+            else if (direction === "aux-out" /* PortDirection.auxOut */) {
+                const port = node.auxOutPorts.find(o => o.id == portId);
+                if (port) {
+                    for (let i = 0; i < port.links.length; i++) {
+                        Object.assign(port.links[i].vprops, {
+                            startX: x,
+                            startY: y
+                        });
+                    }
+                }
+            }
+        }
+        if (this.newEdge !== undefined) {
+            const edge = this.newEdge;
+            const outNode = this.nodes.find(o => o.id === edge.outNodeId);
+            const node = this.nodes.find(o => o.id === nodeId);
+            if (outNode.id === node.id)
+                return;
+            const isInPort = node.inPorts.findIndex(o => o.id === portId) > -1;
+            const isAuxInPort = node.auxInPorts.findIndex(o => o.id === portId) > -1;
+            if (isInPort || isAuxInPort) {
+                edge.vprops.endX = x;
+                edge.vprops.endY = y;
+                edge.inPortId = portId;
+                edge.inNodeId = nodeId;
+                const inNode = this.nodes.find(o => o.id === edge.inNodeId);
+                if (isInPort) {
+                    const canAddInput = node.canAddInput(portId, this.newEdge, outNode);
+                    if (canAddInput) {
+                        outNode.addOutput(edge.outPortId, edge);
+                        inNode.addInput(edge.inPortId, edge);
+                        this.edges.push(edge);
+                        this.clearNewEdge();
+                    }
+                }
+                else {
+                    const canAddAuxIn = node.canAddAuxIn(portId, this.newEdge, outNode);
+                    if (canAddAuxIn) {
+                        outNode.addAuxOut(edge.outPortId, edge);
+                        inNode.addAuxIn(edge.inPortId, edge);
+                        this.edges.push(edge);
+                        this.clearNewEdge();
+                    }
+                }
+            }
+        }
     }
     toJson(full = true) {
         if (full) {

@@ -1,9 +1,13 @@
-import { Component, EventBus, onWillUpdateProps, useRef, useState, useSubEnv } from "@odoo/owl";
+// THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+// THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+
+import { Component, EventBus, useRef, useState, useSubEnv } from "@odoo/owl";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { isOverlap, useMouseListener } from "@nuido/utils/utils";
 import { Document } from "@nuido/components/document";
-import { DebugEventType, EdgeTypeEventType } from "@nuido/components/events";
-import { Default } from "@nuido/utils/registry";
+import { DebugEventType, EdgeTypeEventType, RecalculateEdgeEndpointsEventType } from "@nuido/components/events";
+import { Default, DefaultAux } from "@nuido/utils/registry";
 export class NuidoUi extends Component {
     static template = "nuido.nuido-ui";
     static components = { Document };
@@ -11,6 +15,7 @@ export class NuidoUi extends Component {
         bus: { type: EventBus, optional: true },
         channel: { type: String, optional: true },
         edgeType: { type: String, optional: true },
+        auxEdgeType: { type: String, optional: true },
         documents: { type: (Array), optional: true },
         slots: { type: Object, optional: true }
     };
@@ -18,6 +23,7 @@ export class NuidoUi extends Component {
         bus: new EventBus,
         channel: "nuido",
         edgeType: Default,
+        auxEdgeType: DefaultAux,
         documents: []
     };
     ui;
@@ -54,8 +60,7 @@ export class NuidoUi extends Component {
         };
         useSubEnv(nuidoEnv);
         this.state = useState({
-            env: nuidoEnv,
-            edgeType: this.props.edgeType,
+            env: nuidoEnv
         });
         this.selectionState = useState({
             selecting: false,
@@ -72,9 +77,6 @@ export class NuidoUi extends Component {
             w: 0,
             h: 0,
         };
-        onWillUpdateProps((np) => {
-            this.state.edgeType = np.edgeType;
-        });
         useBus(this.env.bus, this.env.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */, this.zoom_reset.bind(this));
     }
     onSelection(entries, observer) {
@@ -102,8 +104,12 @@ export class NuidoUi extends Component {
     }
     updateEdgeType() {
         this.state.env.bus.trigger(this.state.env.channel + EdgeTypeEventType, {
-            edgeType: this.state.edgeType
+            edgeType: this.props.edgeType,
+            auxEdgeType: this.props.auxEdgeType
         });
+    }
+    recalculateEdgeEndpoints() {
+        this.state.env.bus.trigger(this.state.env.channel + RecalculateEdgeEndpointsEventType);
     }
     onKeydown(event) {
         if (event.key === "Delete" && event.ctrlKey) {

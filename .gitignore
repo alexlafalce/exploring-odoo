@@ -176,3 +176,6 @@ ts/
 *.ts
 package.json
 tsconfig.json
+
+# LICENSE TEMPLATE
+license-template.txt

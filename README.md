@@ -12,7 +12,8 @@ Currently there are two experiments based on Nuido:
 ## Nuido Flow: Automation for Odoo
    ![Nuido Flow](doc/images/nuido-flow.png)
 
-Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more information.
+Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more information. And please keep this repo alive by giving it a star and sharing it.
+
 
 > [!NOTE]
 > This branch requires you to be comfortable with Odoo frameworks such ash the ORM, OWL, Qweb, etc. You don't need to be an expert, but you still need to understand the basics.
@@ -62,11 +63,12 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 >[!CAUTION]
 > This branch is currently in active development, while the core/basic concepts doesn't change, the codes are expected to be changed depending on the issues I encounter while creating the video for them.
 
-## Please keep this repo alive by giving it a star and sharing it.
-
 # Experimental Odoo Modules
 
 | Name         | Folder       | Description                                                |
 | ------------ | ------------ | ---------------------------------------------------------- |
 | AI Chat Base | ai_chat_base | This module provides the base to create streaming AI chat. |
 | Nuido        | nuido        | Node based UI for Odoo                                     |
+| Nuido Demo   | nuido_demo   | Demonstrate Nuido                                          |
+
+## Please keep this repo alive by giving it a star and sharing it.

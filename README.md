@@ -2,7 +2,10 @@
 This repository contains source codes presented in youtube channel [Exploring Odoo](https://www.youtube.com/@exploring-odoo)
 
 ## Please keep this repo alive by giving it a star and sharing it.
-Click the star button on the right top to show your support.
+By giving this repo a star you are not only supporting and keeping this repo alive, but it also gives me the motivation to keep updating this repo.
+
+Click the star button on the right top to show your support:
+
 ![Nuido AI](doc/images/starme.png)
 
 
@@ -12,9 +15,18 @@ This branch is specific for Nuido related modules.
 Nuido is a library to create node based user interface for Odoo.
 Currently there are two experiments based on Nuido:
 ## Nuido AI: AI Chat Studio for Odoo
+   Dark Theme:
    ![Nuido AI](doc/images/nuidoai.png)
+   Light Theme:
+   ![Nuido AI Light](doc/images/nuido-ai-ubuntu-light.png)
 ## Nuido Flow: Automation for Odoo
+   Dark Theme:
    ![Nuido Flow](doc/images/nuido-flow.png)
+   Light Theme:
+   ![Nuido Flow Light](doc/images/nuido-flow-light.png)
+
+
+* The dark theme is not publicly available since it's only exist on my computer.
 
 Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more information. And please keep this repo alive by giving it a star and sharing it.
 

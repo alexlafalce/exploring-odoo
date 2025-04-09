@@ -73,7 +73,7 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 > If you're having trouble with the code, ask politely and nicely like a civil person.
 >
 
->[!WARNING]
+>[!IMPORTANT]
 > Most of the client-side part of the addons/modules in this branch are created using typescript.
 > Currently, I have no plan to publish the typescript files.
 >
@@ -92,3 +92,10 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 | Nuido Demo   | nuido_demo   | Demonstrate Nuido                                          |
 
 ## Please keep this repo alive by giving it a star and sharing it.
+
+# Contributing
+As mentioned above, this repo is only for archiving purpose, i.e., for reference, to learn Odoo, or as proof of concepts.
+Therefore, I'm not accepting PRs for this repo.
+
+You are more than welcome to open discussion to share your thoughts, ideas, experiences or difficulties about modules in this repo.
+Please understand that my goal is to share my experiments and ideas, not to provide production ready modules.

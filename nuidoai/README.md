@@ -1,4 +1,4 @@
-# AI Chat Base
+# Nuido AI
 > [!WARNING]
 > This module is purely experimental and for educational purpose use only.
 >
@@ -11,11 +11,12 @@
 > [!CAUTION]
 > Do not use this module unless you have reviewed the source codes thoroughly, understand what it does and in an experimental environment.
 
-This module provides the base to create streaming AI chat.
+This module demonstrate creating a dynamic configuration with node based user interface for AI chat bots.
 
 ## Please keep this repo alive by giving it a star and sharing it.
 
 Please watch this videos for more details:
 
-[![EXPLORING_ODOO](https://img.youtube.com/vi/8cAYIla4iIk/0.jpg)](https://youtu.be/8cAYIla4iIk)
-
+[![EXPLORING_ODOO](https://img.youtube.com/vi/s0I6ggNNlFE/0.jpg)](https://youtu.be/s0I6ggNNlFE)
+[![EXPLORING_ODOO](https://img.youtube.com/vi/eMWsnA-eB2Y/0.jpg)](https://youtu.be/eMWsnA-eB2Y)
+\

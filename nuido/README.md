@@ -13,8 +13,9 @@
 
 This module provides the base to create node based user interfaces.
 
-Please watch this videos for more details:
+## Please keep this repo alive by giving it a star and sharing it.
 
+Please watch this videos for more details:
 
 [![EXPLORING_ODOO](https://img.youtube.com/vi/sMDIly3bddo/0.jpg)](https://youtu.be/sMDIly3bddo)
 [![EXPLORING_ODOO](https://img.youtube.com/vi/iFPyQjJ2Uyw/0.jpg)](https://youtu.be/iFPyQjJ2Uyw)

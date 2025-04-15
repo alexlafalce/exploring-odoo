@@ -81,16 +81,17 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 >
 
 >[!CAUTION]
-> This branch is currently in active development, while the core/basic concepts doesn't change, the codes are expected to be changed depending on the issues I encounter while creating the video for them.
+> _This branch is currently in active development, while the core/basic concepts doesn't change, **the codes are expected to be changed** depending on the issues I encounter while creating the video for them._
 
 # Experimental Odoo Modules
 
-| Name         | Folder       | Description                                                |
-| ------------ | ------------ | ---------------------------------------------------------- |
-| AI Chat Base | ai_chat_base | This module provides the base to create streaming AI chat. |
-| Nuido        | nuido        | Node based UI for Odoo                                     |
-| Nuido Demo   | nuido_demo   | Demonstrate Nuido                                          |
-| Nuido AI     | nuidoai      | AI Chat Studio for Odoo with Semantic Kernel               |
+| Name           | Folder        | Description                                                |
+| -------------- | ------------- | ---------------------------------------------------------- |
+| AI Chat Base   | ai_chat_base  | This module provides the base to create streaming AI chat. |
+| Nuido          | nuido         | Node based UI for Odoo                                     |
+| Nuido Demo     | nuido_demo    | Demonstrate Nuido                                          |
+| Nuido AI       | nuidoai       | AI Chat Studio for Odoo with Semantic Kernel               |
+| Nuido AI Sales | nuidoai_sales | Example plugin for Nuido AI                                |
 
 ## Please keep this repo alive by giving it a star and sharing it.
 

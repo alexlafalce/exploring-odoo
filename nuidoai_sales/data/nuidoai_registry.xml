@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<!--
+THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+-->
+<odoo>
+    <data>
+        <!--
+            Category: Build Function
+
+            key:
+                Name of the client (javascript/typescript) component
+            value:
+                Python module name and the name of the function to call to build the node info, takes two parameters the raw node json object
+                and raw json object of the edges (array).
+                Separated by comma, i.e., <module_name>,<function_name>
+        -->
+        <record id="build_function_sales_plugin" model="nuidoai.registry">
+            <field name="category">Build Function</field>
+            <field name="key">SalesPluginNode</field>
+            <field name="value">nuidoai_sales.models.node_info,build_sales_plugin</field>
+        </record>
+
+        <!--
+            Category: Post Process Function
+
+            key:
+                Name of the client (javascript/typescript) component without the "Node" suffix
+            value:
+                Name of the function to call to post process the node info, takes three parameters:
+                - The corresponding subject, e.g. the agent info, service info, etc.
+                - Section roles records from the registry
+                - The infos built by the build functions in a dict:
+                    {
+                        "services": service_infos,
+                        "chat_groups": chat_group_infos,
+                        "agents": agent_infos,
+                        "plugins": plugin_infos,
+                        "termination_strategies": termination_strategy_infos,
+                        "selection_strategies": selection_strategy_infos
+                    }                -
+        -->
+        <record id="post_process_function_sales_plugin" model="nuidoai.registry">
+            <field name="category">Post Process Function</field>
+            <field name="key">SalesPlugin</field>
+            <field name="value">nuidoai_sales.models.node_info,post_process_sales_plugin</field>
+        </record>
+
+        <!--
+            Category: Create Function
+
+            key:
+                Name of the client (javascript/typescript) component without the "Node" suffix
+            value:
+                Name of the function to call to create the semantic kernel component, takes 3 parameters:
+                - Odoo environment
+                - Create function registry
+                - The corresponding definition, e.g. the agent definition, service definition, etc.
+        -->
+        <record id="create_function_sales_plugin" model="nuidoai.registry">
+            <field name="category">Create Function</field>
+            <field name="key">SalesPlugin</field>
+            <field name="value">nuidoai_sales.ai.semantic_kernel,create_sales_plugin</field>
+        </record>
+    </data>
+</odoo>

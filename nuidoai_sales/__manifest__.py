@@ -11,7 +11,7 @@
     "author": "Yoni Tjio",
     "category": "Productivity",
     "version": "18.0.1.0.0",
-    "depends": ["nuidoai"],
+    "depends": ["sale", "nuidoai"],
     "data": [
             "data/nuidoai_registry.xml"
         ],

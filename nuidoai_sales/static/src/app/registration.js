@@ -4,14 +4,17 @@
 
 import { registry } from "@web/core/registry";
 import { NuidoNodeRegistryName } from "@nuido/utils/registry";
+import { NuidoSidebarMenuItemRegistryName } from "@nuido_base/utils/registry";
 import { SalesPluginNode } from "@nuidoai_sales/components/plugins/sales_plugin";
 import { SalesPluginNodeModel } from "@nuidoai_sales/models/plugins/sales_plugin";
 registry.category(NuidoNodeRegistryName).add(SalesPluginNode.name, {
     component: SalesPluginNode,
     model: SalesPluginNodeModel
 });
-registry.category("nuidoai_sidebar_menu_item").category("Plugins" /* NuidoAiSideMenuCategory.PLUGINS */).add(SalesPluginNode.name, {
+const menuSidebarMenuItemReg = registry.category(NuidoSidebarMenuItemRegistryName);
+const pluginMenuItems = menuSidebarMenuItemReg.get("Plugins");
+pluginMenuItems.items.push({
     title: "Sales Plugin",
-    icon: "/nuidoai/static/images/money-dollars.svg",
+    icon: "/nuidoai_sales/static/images/money-dollars.svg",
     type: SalesPluginNode.name
 });

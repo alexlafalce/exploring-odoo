@@ -94,6 +94,7 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 | -------------- | ------------- | ---------------------------------------------------------- |
 | AI Chat Base   | ai_chat_base  | This module provides the base to create streaming AI chat. |
 | Nuido          | nuido         | Node based UI for Odoo                                     |
+| Nuido Base     | nuido_base    | Base module to create Odoo app with node based UI          |
 | Nuido Demo     | nuido_demo    | Demonstrate Nuido                                          |
 | Nuido AI       | nuidoai       | AI Chat Studio for Odoo with Semantic Kernel               |
 | Nuido AI Sales | nuidoai_sales | Example plugin for Nuido AI                                |

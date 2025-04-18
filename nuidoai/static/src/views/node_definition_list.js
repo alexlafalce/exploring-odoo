@@ -16,7 +16,7 @@ export class NuidoAiNodeDefinitionListController extends ListController {
             type: "ir.actions.client",
             tag: "NuidoAiChatStudio",
             params: {
-                res_model: 'nuidoai.node.definition',
+                res_model: 'nuido_base.node.definition',
                 titleField: 'title',
                 jsonField: 'raw'
             },

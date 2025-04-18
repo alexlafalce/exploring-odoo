@@ -2,30 +2,30 @@
 // THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
 
-export var SectionRole;
-(function (SectionRole) {
-    SectionRole["ChatCompletionService"] = "chat-completion-service";
-    SectionRole["AgentName"] = "agent-name";
-    SectionRole["AgentPlugin"] = "agent-plugin";
-    SectionRole["AgentInstruction"] = "agent-instruction";
-    SectionRole["ChatGroupName"] = "chat-group-name";
-    SectionRole["ChatGroupAgent"] = "chat-group-agent";
-    SectionRole["ChatGroupTerminationStrategy"] = "chat-group-termination-strategy";
-    SectionRole["ChatGroupSelectionStrategy"] = "chat-group-selection-strategy";
-    SectionRole["StrategyName"] = "strategy-name";
-    SectionRole["StrategyPrompt"] = "strategy-prompt";
-    SectionRole["StrategyTerminationKeyword"] = "strategy-termination-keyword";
-    SectionRole["StrategyTerminationAgent"] = "strategy-termination-agent";
-    SectionRole["StrategyMaxIteration"] = "strategy-max-iteration";
-    SectionRole["StrategyInitialAgent"] = "strategy-initial-agent";
-    SectionRole["StrategyHistoryVariableName"] = "strategy-history-variable-name";
-    SectionRole["ServiceId"] = "service-id";
-    SectionRole["ServiceBaseUrl"] = "service-base-url";
-    SectionRole["ServiceApiKey"] = "service-api-key";
-    SectionRole["ServiceModel"] = "service-model";
-})(SectionRole || (SectionRole = {}));
-export var StrategyVariableName;
-(function (StrategyVariableName) {
-    StrategyVariableName["TerminationKeyword"] = "termination_keyword";
-    StrategyVariableName["History"] = "$history";
-})(StrategyVariableName || (StrategyVariableName = {}));
+export var NuidoAiSectionRole;
+(function (NuidoAiSectionRole) {
+    NuidoAiSectionRole["ChatCompletionService"] = "chat-completion-service";
+    NuidoAiSectionRole["AgentName"] = "agent-name";
+    NuidoAiSectionRole["AgentPlugin"] = "agent-plugin";
+    NuidoAiSectionRole["AgentInstruction"] = "agent-instruction";
+    NuidoAiSectionRole["ChatGroupName"] = "chat-group-name";
+    NuidoAiSectionRole["ChatGroupAgent"] = "chat-group-agent";
+    NuidoAiSectionRole["ChatGroupTerminationStrategy"] = "chat-group-termination-strategy";
+    NuidoAiSectionRole["ChatGroupSelectionStrategy"] = "chat-group-selection-strategy";
+    NuidoAiSectionRole["StrategyName"] = "strategy-name";
+    NuidoAiSectionRole["StrategyPrompt"] = "strategy-prompt";
+    NuidoAiSectionRole["StrategyTerminationKeyword"] = "strategy-termination-keyword";
+    NuidoAiSectionRole["StrategyTerminationAgent"] = "strategy-termination-agent";
+    NuidoAiSectionRole["StrategyMaxIteration"] = "strategy-max-iteration";
+    NuidoAiSectionRole["StrategyInitialAgent"] = "strategy-initial-agent";
+    NuidoAiSectionRole["StrategyHistoryVariableName"] = "strategy-history-variable-name";
+    NuidoAiSectionRole["ServiceId"] = "service-id";
+    NuidoAiSectionRole["ServiceBaseUrl"] = "service-base-url";
+    NuidoAiSectionRole["ServiceApiKey"] = "service-api-key";
+    NuidoAiSectionRole["ServiceModel"] = "service-model";
+})(NuidoAiSectionRole || (NuidoAiSectionRole = {}));
+export var NuidoAiStrategyVariableName;
+(function (NuidoAiStrategyVariableName) {
+    NuidoAiStrategyVariableName["TerminationKeyword"] = "termination_keyword";
+    NuidoAiStrategyVariableName["History"] = "$history";
+})(NuidoAiStrategyVariableName || (NuidoAiStrategyVariableName = {}));

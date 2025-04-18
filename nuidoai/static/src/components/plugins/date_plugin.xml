@@ -6,5 +6,10 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN
 -->
 <templates xml:space="preserve">
     <t t-name="nuidoai.date-plugin-node" t-inherit="nuido.sectioned-node" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('node')]" position="attributes">
+            <attribute name="style">
+                min-width: 300px;
+            </attribute>
+        </xpath>
     </t>
 </templates>

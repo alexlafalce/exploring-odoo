@@ -18,20 +18,14 @@ from semantic_kernel.core_plugins import math_plugin
 from semantic_kernel.connectors.ai.open_ai import OpenAIChatCompletion
 from semantic_kernel.connectors.ai.function_choice_behavior import FunctionChoiceBehavior
 
+from odoo.addons.nuido_base.tools.function_tool import create_object
+
 from . import consts
-from ..models import nuidoai_registry_category as rcat
-from ..tools.function_tool import get_function
 
 from .plugins import date_plugin, random_number_plugin
+from ..models import registry_category as rcat
 
-def create_semantic_kernel_object(environment, create_function_registry, definition):
-    create_function = get_function(create_function_registry, definition["type"])
-    if create_function:
-        return create_function(environment, create_function_registry, definition)
-    else:
-        raise f"Create function not found for {definition["type"]}"
-
-def create_chat_completion_agent(environment: Environment, create_function_registry, definition):
+def create_chat_completion_agent(environment: Environment, create_function_registry, definitions, definition):
     kernel = Kernel()
 
     agent_name_key = "agent-name"
@@ -42,11 +36,11 @@ def create_chat_completion_agent(environment: Environment, create_function_regis
 
     if agent_plugin_key in definition:
         for plugin_def in definition[agent_plugin_key]:
-            plugin = create_semantic_kernel_object(environment, create_function_registry, plugin_def)
+            plugin = create_object(environment, create_function_registry, definitions, plugin_def["type"], plugin_def)
             kernel.add_plugin(plugin, plugin_def["type"])
 
     service_def = definition[chat_completion_service_key];
-    service = create_semantic_kernel_object(environment, create_function_registry, service_def)
+    service = create_object(environment, create_function_registry, definitions, service_def["type"], service_def)
     kernel.add_service(service)
 
     settings = kernel.get_prompt_execution_settings_from_service_id(service_id = service_def[service_id_key])
@@ -64,22 +58,22 @@ def create_chat_completion_agent(environment: Environment, create_function_regis
 
     return agent
 
-def create_chat_group(environment, create_function_registry, definition):
+def create_chat_group(environment, create_function_registry, definitions, definition):
     chat_group_agent_key = "chat-group-agent"
     chat_group_termination_strategy_key = "chat-group-termination-strategy"
     chat_group_selection_strategy_key = "chat-group-selection-strategy"
 
     agents = []
     for agent_def in definition[chat_group_agent_key]:
-        agent = create_semantic_kernel_object(environment, create_function_registry, agent_def)
+        agent = create_object(environment, create_function_registry, definitions, agent_def["type"], agent_def)
         agents.append(agent)
 
 
     termination_strategy_def = definition[chat_group_termination_strategy_key]
-    termination_strategy = create_semantic_kernel_object(environment, create_function_registry, termination_strategy_def)
+    termination_strategy = create_object(environment, create_function_registry, definitions, termination_strategy_def["type"], termination_strategy_def)
 
     selection_strategy_def = definition[chat_group_selection_strategy_key]
-    selection_strategy = create_semantic_kernel_object(environment, create_function_registry, selection_strategy_def)
+    selection_strategy = create_object(environment, create_function_registry, definitions, selection_strategy_def["type"], selection_strategy_def)
 
     chat = AgentGroupChat(
         agents = agents,
@@ -89,7 +83,7 @@ def create_chat_group(environment, create_function_registry, definition):
 
     return chat
 
-def create_open_ai_chat_completion_service(environment, create_function_registry, definition):
+def create_open_ai_chat_completion_service(environment, create_function_registry, definitions, definition):
     service_api_key = "service-api-key"
     service_base_url_key = "service-base-url"
     service_model_key = "service-model"
@@ -109,28 +103,28 @@ def create_open_ai_chat_completion_service(environment, create_function_registry
 
     return service
 
-def create_date_plugin(environment, create_function_registry, definition):
+def create_date_plugin(environment, create_function_registry, definitions, definition):
     return date_plugin.DatePlugin(environment)
 
-def create_math_plugin(environment, create_function_registry, definition):
+def create_math_plugin(environment, create_function_registry, definitions, definition):
     return math_plugin.MathPlugin()
 
-def create_random_number_plugin(environment, create_function_registry, definition):
+def create_random_number_plugin(environment, create_function_registry, definitions, definition):
     return random_number_plugin.RandomNumberPlugin(environment)
 
-def create_prompt_selection_strategy(environment, create_function_registry, definition):
+def create_prompt_selection_strategy(environment, create_function_registry, definitions, definition):
     chat_completion_service_key = "chat-completion-service"
     strategy_name_key = "strategy-name"
     strategy_prompt_key = "strategy-prompt"
     strategy_initial_agent_key = "strategy-initial-agent"
 
-    history_variable_name = environment["nuidoai.registry"].search_read([("category", "=", rcat.VARIABLE),
+    history_variable_name = environment["nuido_base.registry"].search_read([("category", "=", rcat.VARIABLE),
                                                                     ("key", "=", "HistoryVariableName")])[0]["value"]
 
     kernel = Kernel()
 
     service_def = definition[chat_completion_service_key];
-    service = create_semantic_kernel_object(environment, create_function_registry, service_def)
+    service = create_object(environment, create_function_registry, definitions, service_def["type"], service_def)
     kernel.add_service(service)
 
     kernel_function = KernelFunctionFromPrompt(
@@ -139,7 +133,7 @@ def create_prompt_selection_strategy(environment, create_function_registry, defi
         )
 
     agent_def = definition[strategy_initial_agent_key]
-    initial_agent = create_semantic_kernel_object(environment, create_function_registry, agent_def)
+    initial_agent = create_object(environment, create_function_registry, definitions, agent_def["type"], agent_def)
 
     strategy = KernelFunctionSelectionStrategy(
             kernel = kernel,
@@ -150,10 +144,10 @@ def create_prompt_selection_strategy(environment, create_function_registry, defi
         )
     return strategy
 
-def create_sequential_selection(environment, create_function_registry, definition):
+def create_sequential_selection(environment, create_function_registry, definitions, definition):
     return SequentialSelectionStrategy()
 
-def create_prompt_termination_strategy(environment, create_function_registry, definition):
+def create_prompt_termination_strategy(environment, create_function_registry, definitions, definition):
     chat_completion_service_key = "chat-completion-service"
     strategy_name_key = "strategy-name"
     strategy_prompt_key = "strategy-prompt"
@@ -161,15 +155,15 @@ def create_prompt_termination_strategy(environment, create_function_registry, de
     strategy_termination_agent_key = "strategy-termination-agent"
     strategy_max_iteration_key = "strategy-max-iteration"
 
-    termination_keyword_placeholder = environment["nuidoai.registry"].search_read([("category", "=", rcat.VARIABLE),
+    termination_keyword_placeholder = environment["nuido_base.registry"].search_read([("category", "=", rcat.VARIABLE),
                                                                     ("key", "=", "TerminationKeywordPlaceholder")])[0]["value"]
-    history_variable_name = environment["nuidoai.registry"].search_read([("category", "=", rcat.VARIABLE),
+    history_variable_name = environment["nuido_base.registry"].search_read([("category", "=", rcat.VARIABLE),
                                                                     ("key", "=", "HistoryVariableName")])[0]["value"]
 
     kernel = Kernel()
 
     service_def = definition[chat_completion_service_key];
-    service = create_semantic_kernel_object(environment, create_function_registry, service_def)
+    service = create_object(environment, create_function_registry, definitions, service_def["type"], service_def)
     kernel.add_service(service)
 
     termination_keyword = definition[strategy_termination_keyword_key]
@@ -183,7 +177,7 @@ def create_prompt_termination_strategy(environment, create_function_registry, de
         )
 
     agent_def = definition[strategy_termination_agent_key]
-    termination_agent = create_semantic_kernel_object(environment, create_function_registry, agent_def)
+    termination_agent = create_object(environment, create_function_registry, definitions, agent_def["type"], agent_def)
 
     strategy = KernelFunctionTerminationStrategy(
             kernel = kernel,

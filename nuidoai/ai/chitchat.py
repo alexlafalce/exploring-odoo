@@ -12,27 +12,32 @@ import json
 
 from semantic_kernel.contents.chat_history import ChatHistory
 
-from .semantic_kernel import create_semantic_kernel_object
-from ..models import nuidoai_registry_category as rcat
+from odoo.addons.nuido_base.tools.function_tool import create_object
+from ..models import registry_category as rcat
 
 class ChitChat:
     def __init__(self, env, definition):
+        self.mode = "None"
+
         self.env = env
-        def_obj = json.loads(definition)
+        definitions = json.loads(definition)
+        create_function_registry = self.env["nuido_base.registry"].search_read([("category", "=", rcat.CREATE_FUNCTION)])
 
-        create_function_registry = self.env["nuidoai.registry"].search_read([("category", "=", rcat.CREATE_FUNCTION)])
+        group_def = next((o for o in definitions if o["type"].endswith("Group")), None)
 
-        if len(def_obj["chat_groups"]) > 0:
-            chat_group_def = def_obj["chat_groups"][0]
-            chat_group = create_semantic_kernel_object(self.env, create_function_registry, chat_group_def)
+        if group_def is not None:
+            chat_group = create_object(self.env, create_function_registry, definitions, group_def["type"], group_def)
             self.chat = chat_group
 
             self.mode = "group"
-        elif len(def_obj["agents"]) > 0:
-            self.chat_history = ChatHistory()
+        else:
+            agent_def = next((o for o in definitions if o["type"].endswith("Agent")), None)
+            if agent_def is not None:
 
-            agent_def = def_obj["agents"][0]
-            agent = create_semantic_kernel_object(self.env, create_function_registry, agent_def)
-            self.chat = agent
+                self.chat_history = ChatHistory()
 
-            self.mode = "agent"
+                agent = create_object(self.env, create_function_registry, definitions, agent_def["type"], agent_def)
+                self.chat = agent
+
+                self.mode = "agent"
+

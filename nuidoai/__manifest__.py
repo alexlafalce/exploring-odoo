@@ -2,7 +2,6 @@
 # THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
 # THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
 
-# -*- coding: utf-8 -*-
 {
     "name": "Nuido AI",
     "summary": """AI chat studio for Odoo""",
@@ -12,11 +11,9 @@
     "author": "Yoni Tjio",
     "category": "Productivity",
     "version": "18.0.1.0.0",
-    "depends": ["base", "web", "nuido", "ai_chat_base"],
+    "depends": ["base", "web", "nuido", "nuido_base", "ai_chat_base"],
     "data": [
             "security/ir.model.access.csv",
-            "views/nuidoai_registry_views.xml",
-            "views/nuidoai_node_definition_views.xml",
             "views/nuidoai_views.xml",
             "views/res_config_settings_views.xml",
             "data/nuidoai_registry.xml"

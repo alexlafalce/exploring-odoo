@@ -3,8 +3,8 @@
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
 
 import { uuidv4 } from "@nuido/utils/utils";
-import { SectionedNodeWithRoleModel } from "@nuidoai/models/nodes/SectionedNodeWithRoleModel";
-import { LabelSection } from "@nuidoai/components/sections/label_section";
+import { SectionedNodeWithRoleModel } from "@nuido_base/models/nodes/SectionedNodeWithRoleModel";
+import { LabelSection } from "@nuido_base/components/sections/label_section";
 export class MathPluginNodeModel extends SectionedNodeWithRoleModel {
     setup() {
         let sectionId = uuidv4();
@@ -13,7 +13,7 @@ export class MathPluginNodeModel extends SectionedNodeWithRoleModel {
             label: "Connect to agents from here.",
             direction: "out" /* SectionDirectionType.Out */,
             maxOut: Number.MAX_SAFE_INTEGER,
-            role: "agent-plugin" /* SectionRole.AgentPlugin */
+            role: "agent-plugin" /* NuidoAiSectionRole.AgentPlugin */
         });
     }
 }

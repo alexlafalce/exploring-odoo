@@ -45,9 +45,15 @@ export class SidebarChatToggler extends Component {
         });
     }
     async isNodeDefinitionSet() {
-        const currentCompanyId = this.company.currentCompany.id;
-        const nodeDef = await this.orm.searchRead("res.company", [['id', '=', currentCompanyId]], ["node_definition"]);
-        const res = nodeDef && nodeDef[0]["node_definition"] ? true : false;
+        let res = false;
+        try {
+            const currentCompanyId = this.company.currentCompany.id;
+            const nodeDef = await this.orm.searchRead("res.company", [['id', '=', currentCompanyId]], ["node_definition"]);
+            res = nodeDef && nodeDef[0]["node_definition"] ? true : false;
+        }
+        catch {
+            console.log("Failed to retrieve company info.");
+        }
         return res;
     }
     async hide() {

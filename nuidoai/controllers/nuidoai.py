@@ -4,7 +4,6 @@
 
 from odoo import http
 from odoo.http import request
-from odoo.tools import frozendict
 
 from ..ai.chitchat import ChitChat
 from ..ai.streamer import Streamer
@@ -18,13 +17,16 @@ class NuidoAiController(http.Controller):
         node_definition_def = node_definition["definition"]
 
         chitchat = ChitChat(env, node_definition_def)
-        streamer = Streamer(env)
+        if chitchat.mode != "None":
+            streamer = Streamer(env)
 
-        if chitchat.mode == "group":
-            res = streamer.group_chat(chitchat, channel, message)
+            if chitchat.mode == "group":
+                res = streamer.group_chat(chitchat, channel, message)
+            else:
+                res = streamer.agent_chat(chitchat, channel, message, history)
+            return res
         else:
-            res = streamer.agent_chat(chitchat, channel, message, history)
-        return res
+            return False
 
     @http.route('/nuidoai/chat/test', type='json', auth='user', website=True)
     def test_chat(self, agent_def_id, channel, message, history):
@@ -34,10 +36,13 @@ class NuidoAiController(http.Controller):
         node_definition_def = node_definition.process_node_definition(node_definition["raw"])
 
         chitchat = ChitChat(env, node_definition_def)
-        streamer = Streamer(env)
+        if chitchat.mode != "None":
+            streamer = Streamer(env)
 
-        if chitchat.mode == "group":
-            res = streamer.group_chat(chitchat, channel, message)
+            if chitchat.mode == "group":
+                res = streamer.group_chat(chitchat, channel, message)
+            else:
+                res = streamer.agent_chat(chitchat, channel, message, history)
+            return res
         else:
-            res = streamer.agent_chat(chitchat, channel, message, history)
-        return res
+            return False

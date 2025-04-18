@@ -82,6 +82,11 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 
 >[!CAUTION]
 > _This branch is currently in active development, while the core/basic concepts doesn't change, **the codes are expected to be changed** depending on the issues I encounter while creating the video for them._
+>
+> _Also please note that there are no upgrade/update paths for these modules. Any updates will not consider the previous version._
+>
+> _Therefore if you want to use the updated version, you'll most likely need to uninstall the previous version first or install it on a new Odoo installation._
+>
 
 # Experimental Odoo Modules
 

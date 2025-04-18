@@ -32,9 +32,9 @@ export class NodeModel {
     }
     setup() {
     }
-    move(left, top, deltaX, deltaY) {
-        this.vprops.left = left;
-        this.vprops.top = top;
+    move(deltaX, deltaY) {
+        this.vprops.left = this.vprops.left + deltaX;
+        this.vprops.top = this.vprops.top + deltaY;
         this.inPorts.forEach(port => {
             port.links.forEach(edge => {
                 edge.vprops.endX = edge.vprops.endX + deltaX;
@@ -180,7 +180,7 @@ export class NodeModel {
         const port = this.auxOutPorts.find(o => o.id == portId);
         port.removeLink(edgeId);
     }
-    getPorts() {
+    getLinkedEdges() {
         let res = [];
         this.inPorts.forEach(port => {
             res = res.concat(port.links);
@@ -194,6 +194,11 @@ export class NodeModel {
         this.auxOutPorts.forEach(port => {
             res = res.concat(port.links);
         });
+        return res;
+    }
+    getPorts() {
+        let res = [];
+        res = res.concat(this.inPorts, this.outPorts, this.auxInPorts, this.auxOutPorts);
         return res;
     }
     resetPorts() {

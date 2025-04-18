@@ -39,7 +39,7 @@
                     position: absolute;
                     min-height: 40px;
                     min-width: 100px;
-                    z-index: 2;
+                    // z-index: 0;
                     padding: 10px;
                     border-radius: 4px;
                     background: $nuido-node-background-color;
@@ -110,7 +110,8 @@
                     }
 
                     %aux-container {
-                        position: absolute;
+                        height: 0px;
+                        position: relative;
                         left: auto;
                         align-self: center;
                         display: flex;
@@ -119,12 +120,12 @@
 
                     .aux-in-container {
                         @extend %aux-container;
-                        bottom: -17px;
+                        bottom: 4px;
                     }
 
                     .aux-out-container {
                         @extend %aux-container;
-                        top: -17px;
+                        top: -27px;
                     }
 
                     %port {
@@ -132,7 +133,7 @@
                         height: 15px;
                         border-radius: 50%;
                         cursor: crosshair;
-                        z-index: 1;
+                        // z-index: -1;
                         border: $nuido-port-border-width solid $nuido-port-border-color;
                     }
 
@@ -173,7 +174,7 @@
             }
 
             svg.edge {
-                z-index: 0;
+                z-index: -2;
                 overflow: visible !important;
                 position: absolute;
                 pointer-events: none;

@@ -2,13 +2,14 @@
 // THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
 
-import { Component, useRef, useState } from "@odoo/owl";
+import { Component, useRef } from "@odoo/owl";
 import { useBus } from "@web/core/utils/hooks";
+import { useDebounced } from "@web/core/utils/timing";
 import { registry } from "@web/core/registry";
 import { NuidoPortRegistryName } from "@nuido/utils/registry";
 import { useDraggable } from "@nuido/utils/utils";
 import { NodeModel } from "@nuido/models/node";
-import { DebugEventType } from "@nuido/components/events";
+import { DebugEventType, NodeMovedEventType, RecalculateEdgeEndpointsEventType } from "@nuido/components/events";
 import { Port } from "@nuido/components/port";
 export class Node extends Component {
     static template = "nuido.node";
@@ -18,13 +19,8 @@ export class Node extends Component {
     };
     ui;
     rootRef;
-    position;
     setup() {
         this.rootRef = useRef("root");
-        this.position = useState({
-            left: `${this.props.node.vprops.left}px`,
-            top: `${this.props.node.vprops.top}px`,
-        });
         useDraggable({
             ref: this.rootRef,
             handle: ".node-title",
@@ -52,14 +48,28 @@ export class Node extends Component {
                 ctx.lastPointerY = y;
                 ctx.style.left = `${left}px`;
                 ctx.style.top = `${top}px`;
-                this.notifyUpdate(left, top, trueDeltaX, trueDeltaY);
+                this.notifyUpdate(trueDeltaX, trueDeltaY);
             },
         });
+        this.refreshEdges = useDebounced(this.refreshEdges, 20);
         useBus(this.env.bus, this.env.channel + DebugEventType, this.onDebug.bind(this));
     }
-    notifyUpdate(left, top, deltaX = 0, deltaY = 0) {
+    refreshEdges() {
+        const ports = this.props.node.getPorts();
+        for (let i = 0; i < ports.length; i++) {
+            this.env.bus.trigger(this.env.channel + RecalculateEdgeEndpointsEventType, {
+                id: ports[i].id
+            });
+        }
+    }
+    notifyUpdate(deltaX = 0, deltaY = 0) {
         const node = this.props.node;
-        node.move(left, top, deltaX, deltaY);
+        node.move(deltaX, deltaY);
+        this.env.bus.trigger(this.env.channel + NodeMovedEventType, {
+            id: this.props.node.id,
+            x: deltaX,
+            y: deltaY
+        });
     }
     onClick(event) {
         this.env.bus.trigger(this.env.channel + "/toggle" /* SelectionEventType.toggle */, {

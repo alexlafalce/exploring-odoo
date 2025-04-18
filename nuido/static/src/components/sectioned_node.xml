@@ -6,7 +6,8 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN
 -->
 <templates xml:space="preserve">
     <t t-name="nuido.sectioned-node">
-        <div t-ref="root" tabstop="0" class="node-container" t-attf-style="left: {{ position.left }}; top: {{ position.top }};"
+        <div t-ref="root" tabstop="0" class="node-container" 
+            t-attf-style="left: {{props.node.vprops.left}}px; top: {{props.node.vprops.top}}px;"
             t-on-click.stop.prevent="onClick">
             <div t-att-id="props.node.id" class="node sectioned">
                 <div class="content">

@@ -6,7 +6,7 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN
 -->
 <templates xml:space="preserve">
     <t t-name="nuido.node">
-        <div t-ref="root" tabstop="0" class="node-container" t-attf-style="left: {{ position.left }}; top: {{ position.top }};"
+        <div t-ref="root" tabstop="0" class="node-container" t-attf-style="left: {{ props.node.vprops.left }}px; top: {{ props.node.vprops.top }}px;"
             t-on-click.stop.prevent="onClick">
             <div t-att-id="props.node.id" class="node">
                 <div class="input-container">
@@ -14,7 +14,7 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN
                         <t t-component="getPortComponent(inPort)" port="inPort"/>
                     </t>
                 </div>
-                <div class="content overflow-hidden align-self-start">
+                <div class="content align-self-start">
                     <div class="aux-out-container">
                         <t t-foreach="props.node.auxOutPorts" t-as="auxOutPort" t-key="auxOutPort.id" >
                             <t t-component="getPortComponent(auxOutPort)" port="auxOutPort"/>

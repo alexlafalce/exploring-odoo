@@ -24,6 +24,7 @@ export class DocumentModel {
     edgeType;
     auxEdgeType;
     selected;
+    data;
     constructor(id, sessionId, title) {
         this.id = id;
         this.title = title;
@@ -35,6 +36,7 @@ export class DocumentModel {
         this.newEdge = undefined;
         this.edgeType = undefined;
         this.auxEdgeType = undefined;
+        this.data = {};
     }
     _addNode(id, icon, title, nodeType, left, top) {
         const nodeRegistry = registry.category(NuidoNodeRegistryName).get(nodeType);
@@ -57,9 +59,9 @@ export class DocumentModel {
     }
     removeNode(id) {
         const node = this.nodes.find(o => o.id === id);
-        const ports = node.getPorts();
+        const edges = node.getLinkedEdges();
         node.resetPorts();
-        ports.forEach(edge => {
+        edges.forEach(edge => {
             this.removeEdge(edge.id);
         });
         removeItem(this.nodes, id);
@@ -249,40 +251,6 @@ export class DocumentModel {
                 }
             }
         }
-        if (this.newEdge !== undefined) {
-            const edge = this.newEdge;
-            const outNode = this.nodes.find(o => o.id === edge.outNodeId);
-            const node = this.nodes.find(o => o.id === nodeId);
-            if (outNode.id === node.id)
-                return;
-            const isInPort = node.inPorts.findIndex(o => o.id === portId) > -1;
-            const isAuxInPort = node.auxInPorts.findIndex(o => o.id === portId) > -1;
-            if (isInPort || isAuxInPort) {
-                edge.vprops.endX = x;
-                edge.vprops.endY = y;
-                edge.inPortId = portId;
-                edge.inNodeId = nodeId;
-                const inNode = this.nodes.find(o => o.id === edge.inNodeId);
-                if (isInPort) {
-                    const canAddInput = node.canAddInput(portId, this.newEdge, outNode);
-                    if (canAddInput) {
-                        outNode.addOutput(edge.outPortId, edge);
-                        inNode.addInput(edge.inPortId, edge);
-                        this.edges.push(edge);
-                        this.clearNewEdge();
-                    }
-                }
-                else {
-                    const canAddAuxIn = node.canAddAuxIn(portId, this.newEdge, outNode);
-                    if (canAddAuxIn) {
-                        outNode.addAuxOut(edge.outPortId, edge);
-                        inNode.addAuxIn(edge.inPortId, edge);
-                        this.edges.push(edge);
-                        this.clearNewEdge();
-                    }
-                }
-            }
-        }
     }
     toJson(full = true) {
         if (full) {
@@ -327,10 +295,10 @@ export class DocumentModel {
                 node.addOutPort(p.id, p.portType, p.maxLinks, p.spec);
             });
             n.auxInPorts.forEach(p => {
-                node.addOutPort(p.id, p.portType, p.maxLinks, p.spec);
+                node.addAuxInPort(p.id, p.portType, p.maxLinks, p.spec);
             });
             n.auxOutPorts.forEach(p => {
-                node.addOutPort(p.id, p.portType, p.maxLinks, p.spec);
+                node.addAuxOutPort(p.id, p.portType, p.maxLinks, p.spec);
             });
             if (node instanceof SectionedNodeModel) {
                 const sn = n;
@@ -354,9 +322,23 @@ export class DocumentModel {
             });
             const edge = this.loadEdge(e.id, e.edgeType, e.vprops.startX, e.vprops.startY, e.vprops.endX, e.vprops.endY, e.inPortId, e.inNodeId, e.outPortId, e.outNodeId, paths, joints);
             const outNode = this.nodes.find(o => o.id === edge.outNodeId);
-            outNode.addOutput(edge.outPortId, edge);
+            let port = outNode.outPorts.find(o => o.id === edge.outPortId);
+            if (port) {
+                port.addLink(edge);
+            }
+            else {
+                port = outNode.auxOutPorts.find(o => o.id === edge.outPortId);
+                port.addLink(edge);
+            }
             const inNode = this.nodes.find(o => o.id === edge.inNodeId);
-            inNode.addInput(edge.inPortId, edge);
+            port = inNode.inPorts.find(o => o.id === edge.inPortId);
+            if (port) {
+                port.addLink(edge);
+            }
+            else {
+                port = inNode.auxInPorts.find(o => o.id === edge.inPortId);
+                port.addLink(edge);
+            }
             this.addEdge(edge);
         });
     }

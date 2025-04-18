@@ -32,3 +32,4 @@ export var NuidoEventType;
 export const DebugEventType = "/debug";
 export const AdjustEdgeEndpointEventType = "/adjust-edge-end-point";
 export const RecalculateEdgeEndpointsEventType = "/recalc-edge-end-points";
+export const NodeMovedEventType = "/node-moved";

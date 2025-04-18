@@ -8,7 +8,7 @@ import { useDebounced, useThrottleForAnimation } from "@web/core/utils/timing";
 import { registry } from "@web/core/registry";
 import { uuidv4 } from "@nuido/utils/utils";
 import { Edge } from "@nuido/components/edge";
-import { DebugEventType, EdgeTypeEventType, AdjustEdgeEndpointEventType } from "@nuido/components/events";
+import { DebugEventType, EdgeTypeEventType, AdjustEdgeEndpointEventType, NodeMovedEventType } from "@nuido/components/events";
 import { DocumentModel } from "@nuido/models/document";
 import { NuidoNodeRegistryName } from "@nuido/utils/registry";
 export class Document extends Component {
@@ -21,6 +21,7 @@ export class Document extends Component {
     setup() {
         this.rootRef = useRef("root");
         useBus(this.env.bus, this.env.channel + "/new" /* DocumentEventType.new */, this.onNewNode.bind(this));
+        useBus(this.env.bus, this.env.channel + NodeMovedEventType, this.onNodeMoved.bind(this));
         useBus(this.env.bus, this.env.channel + "/delete" /* DocumentEventType.delete */, this.onDeleteSelected.bind(this));
         useBus(this.env.bus, this.env.channel + "/reset" /* DocumentEventType.reset */, this.onReset.bind(this));
         useBus(this.env.bus, this.env.channel + EdgeTypeEventType, this.onEdgeTypeChanged.bind(this));
@@ -64,6 +65,16 @@ export class Document extends Component {
         const id = uuidv4();
         const doc = this.props.document;
         doc.addNode(id, icon, title, nodeType, x, y);
+    }
+    onNodeMoved(event) {
+        const doc = this.props.document;
+        if (doc.selected.findIndex(o => o.id === event.detail.id) > -1) {
+            const selected = doc.selected.filter(o => (o.id !== event.detail.id) && (o.type === "node" /* SelectionType.node */));
+            for (let i = 0; i < selected.length; i++) {
+                const node = doc.nodes.find(o => o.id === selected[i].id);
+                node.move(event.detail.x, event.detail.y);
+            }
+        }
     }
     clearSelected() {
         let els = document.getElementsByClassName("selected");

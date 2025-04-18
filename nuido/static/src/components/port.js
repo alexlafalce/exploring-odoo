@@ -59,7 +59,12 @@ export class Port extends Component {
             });
         }
     }
-    onRecalculateEdgeEndpoints() {
+    onRecalculateEdgeEndpoints(event) {
+        if (event.detail) {
+            if (event.detail.id !== this.props.port.id) {
+                return;
+            }
+        }
         const docElement = document.querySelector(".nuido-doc");
         const docRect = docElement.getBoundingClientRect();
         const elRect = this.rootRef.el.getBoundingClientRect();

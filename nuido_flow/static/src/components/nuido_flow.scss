@@ -1,0 +1,53 @@
+// THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+// THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+
+.nuido {
+    .nuido-doc-container {
+        .nuido-doc {
+            .node-container {
+
+                .node:not(.node.sectioned) {
+                    label {
+                        display: block;
+                        padding-bottom: 5px;
+                    }
+
+                    .content {
+                        padding-left: 10px;
+                        padding-right: 10px;
+                    }
+
+                    .trigger-port {
+                        border-radius: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}
+.nuido-flow-notification {
+    .o_notification_content {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+}
+
+.o_input {
+    border: 0 0 0 0;
+    width: 100%;
+}
+
+.text-divider {
+    display: flex;
+    align-items: center;
+}
+
+.text-divider::before,
+.text-divider::after {
+    flex: 1;
+    content: '';
+    padding: 1px;
+    background-color: $gray-500;
+    margin: 5px;
+}

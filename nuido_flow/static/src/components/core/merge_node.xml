@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
+THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
+THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+-->
+<templates xml:space="preserve">
+    <t t-name="nuido_flow.merge-node" t-inherit="nuido.node" t-inherit-mode="primary">
+        <xpath expr="//div[hasclass('node-content')]" position="inside">
+            <div class="btn-group me-1">
+                <button class="btn btn-primary" t-on-click.stop.prevent="onAddAuxIn">
+                    <i class="fa fa-plus"/> <span>Add Data</span>
+                </button>
+                <button class="btn btn-primary" t-on-click.stop.prevent="onRemoveAuxIn">
+                    <i class="fa fa-minus"/> <span>Remove Data</span>
+                </button>
+            </div>
+        </xpath>
+    </t>
+</templates>

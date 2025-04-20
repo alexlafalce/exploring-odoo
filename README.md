@@ -98,6 +98,7 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 | Nuido Demo     | nuido_demo    | Demonstrate Nuido                                          |
 | Nuido AI       | nuidoai       | AI Chat Studio for Odoo with Semantic Kernel               |
 | Nuido AI Sales | nuidoai_sales | Example plugin for Nuido AI                                |
+| Nuido Flow     | nuido_flow    | Base app for automation                                    |
 
 ## Please keep this repo alive by giving it a star and sharing it.
 

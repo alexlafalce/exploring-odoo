@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
-THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
-THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
+
+This software is released under the MIT License.
+https://opensource.org/licenses/MIT
+
+THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
+DO NOT USE IT IN PRODUCTION.
 -->
 <templates xml:space="preserve">
     <t t-name="nuido_base.sidebar-menu">
@@ -26,7 +30,10 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN
                     </li>
                 </div>
                 <hr/>
-
+                <div class="input-group input-group-sm mb-3 me-2 border border-dark rounded">
+                    <span class="input-group-text"><i class="icon fa fa-search fa-lg align-self-center"></i></span>
+                    <input type="text" class="form-control" t-model="state.filter"/>
+                </div>
                 <t t-foreach="menuItems" t-as="menuItem" t-key="menuItem_index">
                     <t t-set="category_title" t-value="menuItem.category"/>
                     <t t-set="sidebar_items" t-value="menuItem.items"/>
@@ -47,9 +54,11 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN
         </div>
         <div t-attf-id="sidebar-cat-{{category_title}}" t-attf-class="w-100 collapse show">
             <t t-foreach="sidebar_items" t-as="item" t-key="item_index">
-                <li class="nav-item">
-                    <MenuItem action="props.action" title="item.title" icon="item.icon" type="item.type"/>
-                </li>
+                <t t-if="item.title.toLowerCase().includes(state.filter.toLowerCase())">
+                    <li class="nav-item">
+                        <MenuItem action="props.action" title="item.title" icon="item.icon" type="item.type"/>
+                    </li>
+                </t>
             </t>
         </div>
     </t>

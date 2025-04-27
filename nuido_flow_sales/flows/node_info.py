@@ -1,11 +1,15 @@
-# THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
-# THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
-# THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
+# THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+# 
+# THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
+# DO NOT USE IT IN PRODUCTION.
 
 from odoo.addons.nuido_flow.flows.node_info import getDefaultInfo
 
-from ..flows.odoo.sales_summary_odoo_node import SalesSummaryOdooNode
-from ..flows.odoo.fixed_range_sales_summary_odoo_node import FixedRangeSalesSummaryOdooNode
+from ..flows.sales.sales_summary_odoo_node import SalesSummaryOdooNode
+from ..flows.sales.fixed_range_sales_summary_odoo_node import FixedRangeSalesSummaryOdooNode
 
 def build_sales_summary_odoo_node(node, edges):
     info = getDefaultInfo(node, edges)

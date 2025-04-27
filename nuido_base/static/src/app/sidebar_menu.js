@@ -1,17 +1,25 @@
-// THIS FILE IS A PART OF PUBLIC REPOSITORY: https://github.com/yonitjio/exploring-odoo
-// THIS SOFTWARE IS RELEASED UNDER THE MIT LICENSE: https://opensource.org/licenses/MIT
-// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY. DO NOT USE IT IN PRODUCTION.
-
+// THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
+// 
+// This software is released under the MIT License.
+// https://opensource.org/licenses/MIT
+// 
+// THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
+// DO NOT USE IT IN PRODUCTION.
 import { registry } from "@web/core/registry";
-import { Component } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 import { MenuItem } from "@nuido_base/app/menu_item";
 import { NuidoSidebarMenuItemRegistryName } from "@nuido_base/utils/registry";
 export class SidebarMenu extends Component {
+    setup() {
+        this.state = useState({
+            filter: ''
+        });
+    }
     get menuItems() {
-        const sidebarItemRegistry = registry.category(NuidoSidebarMenuItemRegistryName).getAll()
-            .filter((o) => o.app == this.props.app)
+        const sidebarItemRegistry = registry.category(NuidoSidebarMenuItemRegistryName).getAll();
+        const res = sidebarItemRegistry.filter((o) => o.app == this.props.app)
             .sort((a, b) => a.category > b.category ? 1 : a.category < b.category ? -1 : 0);
-        return sidebarItemRegistry;
+        return res;
     }
     toggleCategory(id) {
         const el = document.getElementById(id);

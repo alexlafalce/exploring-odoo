@@ -101,6 +101,7 @@ Please visit [Exploring Odoo](https://www.youtube.com/@exploring-odoo) for more 
 | Nuido Flow           | nuido_flow           | Base app for automation                                    |
 | Nuido Flow Sales     | nuido_flow_sales     | Example addon for Nuido Flow                               |
 | Nuido Flow Messaging | nuido_flow_messaging | Messaging addon for Nuido Flow                             |
+| Nuido Flow Trigger   | nuido_flow_trigger   | Runs Nuido Flow with triggers.                             |
 
 ## Please keep this repo alive by giving it a star and sharing it.
 

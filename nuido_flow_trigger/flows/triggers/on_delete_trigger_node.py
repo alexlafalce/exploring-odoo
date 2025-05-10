@@ -1,0 +1,66 @@
+# THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+# 
+# THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
+# DO NOT USE IT IN PRODUCTION.
+
+import logging
+
+_logger = logging.getLogger(__name__)
+
+from .record_trigger_node import RecordTriggerNode
+
+# Adapted from base_automation module
+class OnDeleteTriggerNode(RecordTriggerNode):
+    TRIGGER_METHOD_NAME = "unlink"
+
+    def _register_hook(self):
+        def patch_unlink():
+            def unlink(self, **kwargs):
+                node_definitions = self.env['nuido_flow.node.definition']._get_node_definition(self, OnDeleteTriggerNode.TRIGGER_METHOD_NAME)
+                if node_definitions:
+                    records = self.with_env(node_definitions.env)
+                    context = {
+                        'active_model': records._name,
+                        'active_ids': records.ids,
+                        'active_id': records.id,
+                        'is_debug': self.env.user.has_group('base.group_no_one')
+                    }
+                    for node_def in node_definitions:
+                        context.update({
+                                "active_node_definition_id": node_def.id,
+                            })
+                        node_def.with_context(**context).run({})
+
+                return unlink.origin(self, **kwargs)
+
+            return unlink
+
+        Model = self.env.get(self.definition["model"])
+
+        if Model is None:
+            return
+
+        OnDeleteTriggerNode._patch(Model, OnDeleteTriggerNode.TRIGGER_METHOD_NAME, patch_unlink())
+
+    def _unregister_hook(self):
+        Model = self.env.get(self.definition["model"])
+        OnDeleteTriggerNode._unpatch(Model, OnDeleteTriggerNode.TRIGGER_METHOD_NAME)
+
+    def _update_registry(self):
+        if self.env.registry.ready:
+            self._unregister_hook()
+            self._register_hook()
+            self.env.registry.registry_invalidated = True
+
+    def process(self, params):
+        super().process(params)
+
+        self._update_registry()
+
+        return params
+
+    def cleanup(self):
+        self._unregister_hook()

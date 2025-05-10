@@ -55,12 +55,12 @@ export class Node extends Component {
             },
         });
         this.refreshEdges = useDebounced(this.refreshEdges, 20);
-        useBus(this.env.bus, this.env.channel + DebugEventType, this.onDebug.bind(this));
+        useBus(this.env.nbus, this.env.channel + DebugEventType, this.onDebug.bind(this));
     }
     refreshEdges() {
         const ports = this.props.node.getPorts();
         for (let i = 0; i < ports.length; i++) {
-            this.env.bus.trigger(this.env.channel + RecalculateEdgeEndpointsEventType, {
+            this.env.nbus.trigger(this.env.channel + RecalculateEdgeEndpointsEventType, {
                 id: ports[i].id
             });
         }
@@ -68,14 +68,14 @@ export class Node extends Component {
     notifyUpdate(deltaX = 0, deltaY = 0) {
         const node = this.props.node;
         node.move(deltaX, deltaY);
-        this.env.bus.trigger(this.env.channel + NodeMovedEventType, {
+        this.env.nbus.trigger(this.env.channel + NodeMovedEventType, {
             id: this.props.node.id,
             x: deltaX,
             y: deltaY
         });
     }
     onClick(event) {
-        this.env.bus.trigger(this.env.channel + "/toggle" /* SelectionEventType.toggle */, {
+        this.env.nbus.trigger(this.env.channel + "/toggle" /* SelectionEventType.toggle */, {
             id: this.props.node.id,
             type: "node" /* SelectionType.node */
         });

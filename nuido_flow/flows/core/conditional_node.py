@@ -11,22 +11,25 @@ import logging
 _logger = logging.getLogger(__name__)
 
 from .base_node import BaseNode
+from ..tools.tools import get_default_context_for_eval, get_active_record_info
 
 from odoo.tools import safe_eval
 
 class ConditionalNode(BaseNode):
     def process(self, params):
-        context = {
-            'datetime': safe_eval.datetime,
-            'dateutil': safe_eval.dateutil,
-            'time': safe_eval.time,
-            'uid': self.env.uid,
-            'user': self.env.user,
-        }
+        context = get_default_context_for_eval(self.env)
         if params is not None:
             context['params'] = params
 
-        res = safe_eval.safe_eval(self.definition["condition"], context)
+        info = get_active_record_info(self.env)
+        context = {**context, **info}
+
+        try:
+            res = safe_eval.safe_eval(self.definition["condition"], context)
+        except:
+            _logger.warning("Exception on evaluation: %s", self.definition["condition"], exc_info=True)
+            res = False
+
         if res != True:
             res = False
 

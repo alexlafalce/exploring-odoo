@@ -15,11 +15,12 @@ class NuidoAiController(http.Controller):
         env = request.env
 
         node_definition = env["nuido_flow.node.definition"].browse(def_id)
-        node_definition._process_node_definitions()
+        if not node_definition.is_processed:
+            node_definition._process_node_definitions()
 
         context = {
-            'uid': env.user.id,
-            'is_debug': env.user.has_group('base.group_no_one'),
+            "uid": env.user.id,
+            "is_debug": env.user.has_group('base.group_no_one'),
             "active_node_definition_id": def_id,
         }
         node_definition.with_context(**context).run({})
@@ -31,6 +32,7 @@ class NuidoAiController(http.Controller):
         env = request.env
 
         node_definition = env["nuido_flow.node.definition"].browse(def_id)
-        node_definition._process_node_definitions()
+        if not node_definition.is_processed:
+            node_definition._process_node_definitions()
 
         return True

@@ -5,15 +5,21 @@
 // 
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 // DO NOT USE IT IN PRODUCTION.
-import { NodeModel } from "@nuido/models/node";
 import { Default } from "@nuido/utils/registry";
+import { StarterPort } from "@nuido_flow/components/ports/starter_port";
 import { TriggerPort } from "@nuido_flow/components/ports/trigger_port";
-export class StartNodeModel extends NodeModel {
+import { SpecAwareNodeModel } from "@nuido_flow/models/core/spec_aware_node";
+export class StartNodeModel extends SpecAwareNodeModel {
     setup() {
         const triggerId = "trigger-" + this.id + "-1";
         this.addInPort(triggerId, TriggerPort.name, 1);
         const outId = "out-" + this.id + "-1";
         this.addOutPort(outId, Default, 1);
+        const auxInId = "aux-in-" + this.id + "-1";
+        this.addAuxInPort(auxInId, StarterPort.name, Number.MAX_SAFE_INTEGER, {
+            role: "starter"
+        });
+        this.parameters = "";
     }
     canAddInput(portId, edge, sourceNode) {
         const sourcePort = sourceNode.outPorts.find(o => o.id === edge.outPortId);
@@ -30,11 +36,13 @@ export class StartNodeModel extends NodeModel {
         else {
             res = false;
         }
-        if ("role" in sourcePort["spec"]) {
-            res = res && (sourcePort.spec["role"] === "trigger");
-        }
-        else {
-            res = false;
+        if (res && "spec" in sourcePort) {
+            if ("role" in sourcePort["spec"]) {
+                res = res && (sourcePort.spec["role"] === "trigger");
+            }
+            else {
+                res = false;
+            }
         }
         return res;
     }

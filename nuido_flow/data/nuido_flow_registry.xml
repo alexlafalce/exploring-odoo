@@ -46,6 +46,11 @@ DO NOT USE IT IN PRODUCTION.
             <field name="key">MergeNode</field>
             <field name="value">nuido_flow.flows.node_info,build_merge_node</field>
         </record>
+        <record id="build_function_mapper_node" model="nuido_base.registry">
+            <field name="category">Build Function</field>
+            <field name="key">MapperNode</field>
+            <field name="value">nuido_flow.flows.node_info,build_mapper_node</field>
+        </record>
         <!-- MISC NODES -->
         <record id="build_function_random_number_node" model="nuido_base.registry">
             <field name="category">Build Function</field>
@@ -106,6 +111,11 @@ DO NOT USE IT IN PRODUCTION.
             <field name="category">Create Function</field>
             <field name="key">MergeNode</field>
             <field name="value">nuido_flow.flows.node_info,create_merge_node</field>
+        </record>
+        <record id="create_function_mapper_node" model="nuido_base.registry">
+            <field name="category">Create Function</field>
+            <field name="key">MapperNode</field>
+            <field name="value">nuido_flow.flows.node_info,create_mapper_node</field>
         </record>
         <!-- MISC NODES -->
         <record id="create_function_random_number_node" model="nuido_base.registry">

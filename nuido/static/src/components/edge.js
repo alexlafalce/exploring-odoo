@@ -44,7 +44,7 @@ export class Edge extends Component {
                 this.onMoveJoint(ctx.id, wpX, wpY);
             },
         });
-        useBus(this.env.bus, this.env.channel + DebugEventType, this.onDebug.bind(this));
+        useBus(this.env.nbus, this.env.channel + DebugEventType, this.onDebug.bind(this));
     }
     onMoveJoint(id, x, y) {
         const edge = this.props.edge;
@@ -97,7 +97,7 @@ export class Edge extends Component {
             }
         }
         else {
-            this.env.bus.trigger(this.env.channel + "/toggle" /* SelectionEventType.toggle */, {
+            this.env.nbus.trigger(this.env.channel + "/toggle" /* SelectionEventType.toggle */, {
                 id: this.props.edge.id,
                 type: "edge" /* SelectionType.edge */
             });

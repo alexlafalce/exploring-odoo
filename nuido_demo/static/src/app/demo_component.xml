@@ -10,7 +10,7 @@
 -->
 <templates xml:space="preserve">
     <t t-name="nuido_demo.demo_component" >
-        <NuidoUi bus="state.bus" channel="channel" edgeType="state.edgeType" documents="state.documents">
+        <NuidoUi nbus="state.nbus" channel="channel" edgeType="state.edgeType" documents="state.documents">
             <t t-set-slot="before_container">
                 <div class="d-flex flex-column flex-shrink-0 p-3 text-bg-dark" t-att-style="nodeMenuStyle">
                     <ul class="nav nav-pills flex-column mb-auto">

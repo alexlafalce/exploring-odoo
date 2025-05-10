@@ -73,7 +73,7 @@ export class NuidoDemoComponent extends Component {
             }
         ];
         this.state = useState({
-            bus: new EventBus,
+            nbus: new EventBus(),
             documents: [],
             edgeType: Default,
             zoom: 1,
@@ -83,7 +83,7 @@ export class NuidoDemoComponent extends Component {
         const doc = new DocumentModel(docId, sessionId, docId);
         doc.edgeType = String(this.state.edgeType);
         this.state.documents.push(doc);
-        useBus(this.state.bus, this.channel + "/translation_changed" /* NuidoEventType.translation_changed */, this.translation_changed.bind(this));
+        useBus(this.state.nbus, this.channel + "/translation_changed" /* NuidoEventType.translation_changed */, this.translation_changed.bind(this));
     }
     saveDoc() {
         const jsonDoc = this.state.documents[0].toJson();
@@ -117,37 +117,37 @@ export class NuidoDemoComponent extends Component {
         await new Promise(resolve => setTimeout(resolve, 500));
     }
     addDumbNode(x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node", type: DumbNode.name, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node", type: DumbNode.name, x: x, y: y });
     }
     addDumbNodeNoInput(x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Input", type: DumbNodeNoInput.name, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Input", type: DumbNodeNoInput.name, x: x, y: y });
     }
     addDumbNodeNoOutput(x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Output", type: DumbNodeNoOutput.name, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Output", type: DumbNodeNoOutput.name, x: x, y: y });
     }
     addDumbNodeWithTextArea(x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Textarea", type: DumbNodeWithTextArea.name, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Textarea", type: DumbNodeWithTextArea.name, x: x, y: y });
     }
     addDumbNodeMultipleOutputs(x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Outputs", type: DumbNodeMultipleOutputs.name, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Outputs", type: DumbNodeMultipleOutputs.name, x: x, y: y });
     }
     addDumbNodeMultipleInputs(x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Inputs", type: DumbNodeMultipleInputs.name, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Inputs", type: DumbNodeMultipleInputs.name, x: x, y: y });
     }
     addDumbSectionedNode(x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Sectioned", type: DumbSectionedNode.name, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { title: "Node - Sectioned", type: DumbSectionedNode.name, x: x, y: y });
     }
     deleteSelected() {
-        this.state.bus.trigger(this.channel + "/delete" /* DocumentEventType.delete */);
+        this.state.nbus.trigger(this.channel + "/delete" /* DocumentEventType.delete */);
     }
     reset() {
-        this.state.bus.trigger(this.channel + "/reset" /* DocumentEventType.reset */);
+        this.state.nbus.trigger(this.channel + "/reset" /* DocumentEventType.reset */);
     }
     onDoubleClick() {
-        this.state.bus.trigger(this.channel + "/clear" /* SelectionEventType.clear */);
+        this.state.nbus.trigger(this.channel + "/clear" /* SelectionEventType.clear */);
     }
     onUpdateEdgeType() {
-        this.state.bus.trigger(this.channel + EdgeTypeEventType, {
+        this.state.nbus.trigger(this.channel + EdgeTypeEventType, {
             edgeType: this.state.edgeType
         });
     }
@@ -169,7 +169,7 @@ export class NuidoDemoComponent extends Component {
         }
     }
     zoom_reset() {
-        this.state.bus.trigger(this.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */);
+        this.state.nbus.trigger(this.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */);
     }
     translation_changed(event) {
         this.state.zoom = event.detail.zoom;
@@ -178,7 +178,7 @@ export class NuidoDemoComponent extends Component {
         return Math.round((this.state.zoom + Number.EPSILON) * 100) / 100;
     }
     debug() {
-        this.state.bus.trigger(this.channel + DebugEventType);
+        this.state.nbus.trigger(this.channel + DebugEventType);
     }
 }
 registry.category("actions").add("NuidoDemoComponent", NuidoDemoComponent);

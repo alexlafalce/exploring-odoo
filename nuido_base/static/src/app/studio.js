@@ -25,13 +25,13 @@ export class NuidoStudio extends Component {
         this.action = useService("action");
         this.channel = "nuido_base";
         this.state = useState({
-            bus: new EventBus,
+            nbus: new EventBus(),
             documents: [],
             edgeType: this.edgeType,
             auxEdgeType: this.auxEdgeType,
             zoom: 1,
         });
-        useBus(this.state.bus, this.channel + "/translation_changed" /* NuidoEventType.translation_changed */, this.translation_changed.bind(this));
+        useBus(this.state.nbus, this.channel + "/translation_changed" /* NuidoEventType.translation_changed */, this.translation_changed.bind(this));
         onWillStart(this.onWillStart);
     }
     async onWillStart() {
@@ -78,7 +78,7 @@ export class NuidoStudio extends Component {
         return this.state.documents[this.state.documents.length - 1];
     }
     notifyNewNode(icon, title, type, x, y) {
-        this.state.bus.trigger(this.channel + "/new" /* DocumentEventType.new */, { icon: icon, title: title, type: type, x: x, y: y });
+        this.state.nbus.trigger(this.channel + "/new" /* DocumentEventType.new */, { icon: icon, title: title, type: type, x: x, y: y });
     }
     onShowJson() {
         const jsonDoc = this.state.documents[0].toJson();
@@ -87,7 +87,7 @@ export class NuidoStudio extends Component {
         });
     }
     onFixEdgeEndpoints() {
-        this.state.bus.trigger(this.channel + RecalculateEdgeEndpointsEventType);
+        this.state.nbus.trigger(this.channel + RecalculateEdgeEndpointsEventType);
     }
     get resModel() {
         return this.constructor.res_model;
@@ -121,7 +121,8 @@ export class NuidoStudio extends Component {
                     label: 'Title',
                     initialValue: '',
                     apply: (value) => resolve(value),
-                    cancel: () => resolve(''),
+                }, {
+                    onClose: () => resolve("")
                 });
             });
             if (res && res.trim() !== '') {
@@ -137,13 +138,13 @@ export class NuidoStudio extends Component {
         }
     }
     deleteSelected() {
-        this.state.bus.trigger(this.channel + "/delete" /* DocumentEventType.delete */);
+        this.state.nbus.trigger(this.channel + "/delete" /* DocumentEventType.delete */);
     }
     clearSelection() {
-        this.state.bus.trigger(this.channel + "/clear" /* SelectionEventType.clear */);
+        this.state.nbus.trigger(this.channel + "/clear" /* SelectionEventType.clear */);
     }
     zoom_reset() {
-        this.state.bus.trigger(this.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */);
+        this.state.nbus.trigger(this.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */);
     }
     translation_changed(event) {
         this.state.zoom = event.detail.zoom;

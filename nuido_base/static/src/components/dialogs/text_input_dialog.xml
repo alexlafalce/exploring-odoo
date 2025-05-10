@@ -13,8 +13,10 @@ DO NOT USE IT IN PRODUCTION.
 <t t-name="nuido_base.text-input-dialog">
     <Dialog title="props.title">
         <div class="mb-3 row">
-            <label for="document-name" class="col-sm-2 col-form-label"><t t-out="props.label"/></label>
-            <div class="col-sm-10">
+            <t t-if="props.label">
+                <label for="document-name" class="col-sm-2 col-form-label"><t t-out="props.label"/></label>
+            </t>
+            <div class="col-sm-10 flex-fill">
                 <input type="text" class="form-control text-primary border-primary" id="document-name" t-model="state.text" />
             </div>
         </div>
@@ -23,7 +25,7 @@ DO NOT USE IT IN PRODUCTION.
             <button class="btn btn-primary" t-on-click="onClickApply">
                 Ok
             </button>
-            <button class="btn btn-secondary" t-on-click="onClickCancel">
+            <button class="btn btn-secondary" t-on-click="props.close">
                 Cancel
             </button>
         </t>

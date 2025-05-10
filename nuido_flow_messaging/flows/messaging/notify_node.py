@@ -38,7 +38,7 @@ class NotifyNode(BaseNode):
                     if msg == "":
                         raise Exception("Empty message.")
                 except Exception as ex:
-                    _logger.warning("Error: %s", ex)
+                    _logger.warning("Exception while rendering: %s", self.definition["template"], exc_info=True)
                     msg = "Empty message received."
 
             uid = self.env.context["uid"]
@@ -55,8 +55,6 @@ class NotifyNode(BaseNode):
                     msg = "Context:  \n```\n" + json.dumps(self.env.context, indent=4, default=json_default) + "  \n```"
                     msg = msg + "  \n Params:  \n```" + json.dumps(params, indent=4, default=json_default) + "  \n```"
                 except Exception as e:
-                    _logger.warning("Error: %s", e)
-                    msh = "Error while creating debug message."
                     pass
 
                 user._bus_send('simple_notification_ex', {
@@ -66,4 +64,4 @@ class NotifyNode(BaseNode):
                     'sticky': self.definition['sticky']
                 })
 
-        return {}
+        return params

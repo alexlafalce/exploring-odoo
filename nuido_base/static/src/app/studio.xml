@@ -10,7 +10,7 @@ DO NOT USE IT IN PRODUCTION.
 -->
 <templates xml:space="preserve">
     <t t-name="nuido_base.studio">
-        <NuidoUi bus="state.bus" channel="channel" edgeType="state.edgeType" documents="state.documents">
+        <NuidoUi nbus="state.nbus" channel="channel" edgeType="state.edgeType" documents="state.documents">
             <t t-set-slot="before_container">
                 <SidebarMenu app="appName" action="notifyNewNode.bind(this)" title="currentDoc.title" />
                 <div id="nuido-toolbar" class="toolbar z-3 btn-toolbar justify-content-between" >

@@ -6,6 +6,7 @@
 # THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 # DO NOT USE IT IN PRODUCTION.
 
+from odoo.tools import safe_eval
 from odoo.addons.nuido_base.tools.function_tool import create_object
 from ..core.base_node import FlowNode
 
@@ -25,3 +26,33 @@ def run_nodes(env, create_function_registry, definitions, start_node_def, start_
                 node = None
         else:
             node = None
+
+def get_default_context_for_eval(env):
+    context = {
+        'datetime': safe_eval.datetime,
+        'dateutil': safe_eval.dateutil,
+        'time': safe_eval.time,
+        'json': safe_eval.json,
+        'uid': env.uid,
+        'user': env.user,
+    }
+    if "start_params" in env.context:
+        context['start_params'] = env.context["start_params"]
+    if "run_params" in env.context:
+        context['run_params'] = env.context["run_params"]
+
+    return context
+
+def get_active_record_info(env):
+    info = {}
+
+    if "active_id" in env.context:
+        info["active_id"] = env.context["active_id"]
+
+    if "active_ids" in env.context:
+        info["active_ids"] = env.context["active_ids"]
+
+    if "active_model" in env.context:
+        info["active_model"] = env.context["active_model"]
+
+    return info

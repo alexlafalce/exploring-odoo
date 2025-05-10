@@ -27,6 +27,12 @@ class NuidoFlowStudio extends NuidoStudio {
     onAfterSave(newId) {
         window.location.assign(("/odoo/nuidoflow/" + newId + "/NuidoFlowStudio"));
     }
+    clearCaches() {
+        const hasStarterNode = this.currentDoc.nodes.findIndex(o => o.nodeType.endsWith("StarterNode")) > -1;
+        if (hasStarterNode) {
+            this.env.bus.trigger("CLEAR-CACHES");
+        }
+    }
     async onSave() {
         const isProcessed = this.currentDoc.isProcessed;
         let confirmed = false;
@@ -41,6 +47,7 @@ class NuidoFlowStudio extends NuidoStudio {
             });
         }
         if (confirmed || !isProcessed) {
+            this.clearCaches();
             await super.onSave();
             this.currentDoc.isProcessed = false;
         }
@@ -69,6 +76,7 @@ class NuidoFlowStudio extends NuidoStudio {
             });
         }
         if (confirmed || !hasTriggerNode) {
+            this.clearCaches();
             const res = await rpc("/nuidoflow/process", {
                 "def_id": this.props.action.context.active_id,
             });
@@ -101,6 +109,7 @@ class NuidoFlowStudio extends NuidoStudio {
             });
         }
         if (confirmed || !hasTriggerNode) {
+            this.clearCaches();
             const res = await rpc("/nuidoflow/run", {
                 "def_id": this.props.action.context.active_id,
             });

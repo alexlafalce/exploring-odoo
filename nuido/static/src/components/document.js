@@ -23,19 +23,19 @@ export class Document extends Component {
     selected;
     setup() {
         this.rootRef = useRef("root");
-        useBus(this.env.bus, this.env.channel + "/new" /* DocumentEventType.new */, this.onNewNode.bind(this));
-        useBus(this.env.bus, this.env.channel + NodeMovedEventType, this.onNodeMoved.bind(this));
-        useBus(this.env.bus, this.env.channel + "/delete" /* DocumentEventType.delete */, this.onDeleteSelected.bind(this));
-        useBus(this.env.bus, this.env.channel + "/reset" /* DocumentEventType.reset */, this.onReset.bind(this));
-        useBus(this.env.bus, this.env.channel + EdgeTypeEventType, this.onEdgeTypeChanged.bind(this));
-        useBus(this.env.bus, this.env.channel + "/toggle" /* SelectionEventType.toggle */, this.onToggleSelection.bind(this));
-        useBus(this.env.bus, this.env.channel + "/select" /* SelectionEventType.select */, this.onSelect.bind(this));
-        useBus(this.env.bus, this.env.channel + "/unselect" /* SelectionEventType.unselect */, this.onUnselect.bind(this));
-        useBus(this.env.bus, this.env.channel + "/clear" /* SelectionEventType.clear */, this.onClearSelected.bind(this));
-        useBus(this.env.bus, this.env.channel + "/edge-start" /* NewEdgeEventType.start */, this.onStartConnect.bind(this));
-        useBus(this.env.bus, this.env.channel + "/edge-complete" /* NewEdgeEventType.complete */, this.onCompleteConnect.bind(this));
-        useBus(this.env.bus, this.env.channel + AdjustEdgeEndpointEventType, this.onAdjustEdgeEndpoint.bind(this));
-        useBus(this.env.bus, this.env.channel + DebugEventType, this.onDebug.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/new" /* DocumentEventType.new */, this.onNewNode.bind(this));
+        useBus(this.env.nbus, this.env.channel + NodeMovedEventType, this.onNodeMoved.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/delete" /* DocumentEventType.delete */, this.onDeleteSelected.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/reset" /* DocumentEventType.reset */, this.onReset.bind(this));
+        useBus(this.env.nbus, this.env.channel + EdgeTypeEventType, this.onEdgeTypeChanged.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/toggle" /* SelectionEventType.toggle */, this.onToggleSelection.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/select" /* SelectionEventType.select */, this.onSelect.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/unselect" /* SelectionEventType.unselect */, this.onUnselect.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/clear" /* SelectionEventType.clear */, this.onClearSelected.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/edge-start" /* NewEdgeEventType.start */, this.onStartConnect.bind(this));
+        useBus(this.env.nbus, this.env.channel + "/edge-complete" /* NewEdgeEventType.complete */, this.onCompleteConnect.bind(this));
+        useBus(this.env.nbus, this.env.channel + AdjustEdgeEndpointEventType, this.onAdjustEdgeEndpoint.bind(this));
+        useBus(this.env.nbus, this.env.channel + DebugEventType, this.onDebug.bind(this));
         this.onMouseUp = useDebounced(this.onMouseUp, "animationFrame");
         this.onMouseMove = useThrottleForAnimation(this.onMouseMove);
         onMounted(() => {

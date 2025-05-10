@@ -9,7 +9,7 @@ import { registry } from "@web/core/registry";
 import { NuidoNodeRegistryName, NuidoPortRegistryName } from "@nuido/utils/registry";
 import { NuidoSidebarMenuItemRegistryName } from "@nuido_base/utils/registry";
 import { TriggerPort } from "@nuido_flow/components/ports/trigger_port";
-import { TriggerPortModel } from "@nuido_flow/models/port/trigger_port";
+import { TriggerPortModel } from "@nuido_flow/models/ports/trigger_port";
 import { StartNode } from "@nuido_flow/components/core/start_node";
 import { StartNodeModel } from "@nuido_flow/models/core/start_node";
 import { SpreadNode } from "@nuido_flow/components/core/spread_node";
@@ -22,7 +22,11 @@ import { ConditionalNode } from "@nuido_flow/components/core/conditional_node";
 import { ConditionalNodeModel } from "@nuido_flow/models/core/conditional_node";
 import { MergeNode } from "@nuido_flow/components/core/merge_node";
 import { MergeNodeModel } from "@nuido_flow/models/core/merge_node";
-// Nodes
+import { MapperNode } from "@nuido_flow/components/core/mapper_node";
+import { MapperNodeModel } from "@nuido_flow/models/core/mapper_node";
+import { StarterPort } from "@nuido_flow/components/ports/starter_port";
+import { StarterPortModel } from "@nuido_flow/models/ports/starter_port";
+// Core Nodes
 registry.category(NuidoNodeRegistryName).add(StartNode.name, {
     component: StartNode,
     model: StartNodeModel
@@ -43,6 +47,11 @@ registry.category(NuidoNodeRegistryName).add(MergeNode.name, {
     component: MergeNode,
     model: MergeNodeModel
 });
+registry.category(NuidoNodeRegistryName).add(MapperNode.name, {
+    component: MapperNode,
+    model: MapperNodeModel
+});
+// Misc. Nodes
 registry.category(NuidoNodeRegistryName).add(RandomNumberNode.name, {
     component: RandomNumberNode,
     model: RandomNumberNodeModel
@@ -51,6 +60,10 @@ registry.category(NuidoNodeRegistryName).add(RandomNumberNode.name, {
 registry.category(NuidoPortRegistryName).add(TriggerPort.name, {
     component: TriggerPort,
     model: TriggerPortModel
+});
+registry.category(NuidoPortRegistryName).add(StarterPort.name, {
+    component: StarterPort,
+    model: StarterPortModel
 });
 // Menu items
 // Core
@@ -84,6 +97,11 @@ coreNodeMenuItems.items.push({
     title: "Merge",
     icon: "/nuido_flow/static/images/merge-cells.svg",
     type: MergeNode.name
+});
+coreNodeMenuItems.items.push({
+    title: "Mapper",
+    icon: "/nuido_flow/static/images/network-mapping.svg",
+    type: MapperNode.name
 });
 // Misc
 const miscNodeMenuItemsReg = registry.category(NuidoSidebarMenuItemRegistryName).add("Misc", {

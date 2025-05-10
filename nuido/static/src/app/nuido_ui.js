@@ -15,7 +15,7 @@ export class NuidoUi extends Component {
     static template = "nuido.nuido-ui";
     static components = { Document };
     static props = {
-        bus: { type: EventBus, optional: true },
+        nbus: { type: EventBus },
         channel: { type: String, optional: true },
         edgeType: { type: String, optional: true },
         auxEdgeType: { type: String, optional: true },
@@ -23,7 +23,6 @@ export class NuidoUi extends Component {
         slots: { type: Object, optional: true }
     };
     static defaultProps = {
-        bus: new EventBus,
         channel: "nuido",
         edgeType: Default,
         auxEdgeType: DefaultAux,
@@ -48,7 +47,7 @@ export class NuidoUi extends Component {
         this.lastPointerPos = undefined;
         this.isMoving = false;
         const nuidoEnv = {
-            bus: this.props.bus,
+            nbus: this.props.nbus,
             channel: this.props.channel,
             ui: {
                 zoom_max: 2,
@@ -80,10 +79,7 @@ export class NuidoUi extends Component {
             w: 0,
             h: 0,
         };
-        useBus(this.env.bus, this.env.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */, this.zoom_reset.bind(this));
-    }
-    onSelection(entries, observer) {
-        console.log(entries);
+        useBus(this.state.env.nbus, this.env.channel + "/zoom_reset" /* NuidoEventType.zoom_reset */, this.zoom_reset.bind(this));
     }
     get documents() {
         return this.state.env.documents;
@@ -97,28 +93,35 @@ export class NuidoUi extends Component {
         return currentDocId + "-" + currentSessionId;
     }
     deleteSelected() {
-        this.state.env.bus.trigger(this.state.env.channel + "/delete" /* DocumentEventType.delete */);
+        this.state.env.nbus.trigger(this.state.env.channel + "/delete" /* DocumentEventType.delete */);
     }
     reset() {
-        this.state.env.bus.trigger(this.state.env.channel + "/reset" /* DocumentEventType.reset */);
+        this.state.env.nbus.trigger(this.state.env.channel + "/reset" /* DocumentEventType.reset */);
     }
     clearSelection() {
-        this.state.env.bus.trigger(this.state.env.channel + "/clear" /* SelectionEventType.clear */);
+        this.state.env.nbus.trigger(this.state.env.channel + "/clear" /* SelectionEventType.clear */);
     }
     updateEdgeType() {
-        this.state.env.bus.trigger(this.state.env.channel + EdgeTypeEventType, {
+        this.state.env.nbus.trigger(this.state.env.channel + EdgeTypeEventType, {
             edgeType: this.props.edgeType,
             auxEdgeType: this.props.auxEdgeType
         });
     }
     recalculateEdgeEndpoints() {
-        this.state.env.bus.trigger(this.state.env.channel + RecalculateEdgeEndpointsEventType);
+        this.state.env.nbus.trigger(this.state.env.channel + RecalculateEdgeEndpointsEventType);
     }
     onKeydown(event) {
-        if (event.key === "Delete" && event.ctrlKey) {
-            event.preventDefault();
-            event.stopPropagation();
-            this.deleteSelected();
+        if (event.key === "Delete") {
+            if (event.target instanceof HTMLElement) {
+                if (event.target.classList.contains("nuido-root")) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    this.deleteSelected();
+                }
+            }
+        }
+        else if (event.key === "c" && event.ctrlKey) {
+            // TODO Implement simple copy paste
         }
     }
     onMouseDown(event) {
@@ -189,13 +192,13 @@ export class NuidoUi extends Component {
                 for (let i = 0; i < nodeEls.length; i++) {
                     const rect = nodeEls[i].getBoundingClientRect();
                     if (isOverlap(left, top, width, height, rect.left, rect.top, rect.width, rect.height)) {
-                        this.env.bus.trigger(this.env.channel + "/select" /* SelectionEventType.select */, {
+                        this.state.env.nbus.trigger(this.env.channel + "/select" /* SelectionEventType.select */, {
                             id: nodeEls[i].id,
                             type: "node" /* SelectionType.node */
                         });
                     }
                     else {
-                        this.env.bus.trigger(this.env.channel + "/unselect" /* SelectionEventType.unselect */, {
+                        this.state.env.nbus.trigger(this.env.channel + "/unselect" /* SelectionEventType.unselect */, {
                             id: nodeEls[i].id,
                             type: "node" /* SelectionType.node */
                         });
@@ -204,13 +207,13 @@ export class NuidoUi extends Component {
                 for (let i = 0; i < pathEls.length; i++) {
                     const rect = pathEls[i].getBoundingClientRect();
                     if (isOverlap(left, top, width, height, rect.left, rect.top, rect.width, rect.height)) {
-                        this.env.bus.trigger(this.env.channel + "/select" /* SelectionEventType.select */, {
+                        this.state.env.nbus.trigger(this.env.channel + "/select" /* SelectionEventType.select */, {
                             id: pathEls[i].id,
                             type: "edge" /* SelectionType.edge */
                         });
                     }
                     else {
-                        this.env.bus.trigger(this.env.channel + "/unselect" /* SelectionEventType.unselect */, {
+                        this.state.env.nbus.trigger(this.env.channel + "/unselect" /* SelectionEventType.unselect */, {
                             id: pathEls[i].id,
                             type: "edge" /* SelectionType.edge */
                         });
@@ -266,7 +269,7 @@ export class NuidoUi extends Component {
                 "px) scale(" +
                 this.state.env.ui.zoom +
                 ")";
-        this.state.env.bus.trigger(this.state.env.channel + "/translation_changed" /* NuidoEventType.translation_changed */, {
+        this.state.env.nbus.trigger(this.state.env.channel + "/translation_changed" /* NuidoEventType.translation_changed */, {
             translateX: this.state.env.ui.translateX,
             translateY: this.state.env.ui.translateY,
             zoom: this.state.env.ui.zoom
@@ -296,6 +299,6 @@ export class NuidoUi extends Component {
         return Math.round((this.state.env.ui.zoom + Number.EPSILON) * 100) / 100;
     }
     debug() {
-        this.state.env.bus.trigger(this.state.env.channel + DebugEventType);
+        this.state.env.nbus.trigger(this.state.env.channel + DebugEventType);
     }
 }

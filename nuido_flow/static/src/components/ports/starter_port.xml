@@ -9,11 +9,9 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 DO NOT USE IT IN PRODUCTION.
 -->
 <templates xml:space="preserve">
-    <t t-name="nuido_flow.start-node" t-inherit="nuido.node" t-inherit-mode="primary">
-        <xpath expr="//div[hasclass('node-content')]" position="inside">
-            <div class="mb-2">
-                <TextDialogInput id="props.node.id" label="'Parameters'" value="props.node.parameters" onChanged.bind="onParametersChanged"/>
-            </div>
+    <t t-name="nuido_flow.starter-port" t-inherit="nuido.port" t-inherit-mode="primary">
+        <xpath expr="//div[@t-ref='root']" position="attributes" type="add">
+            <attribute name="class" add="starter-port" separator=" "/>
         </xpath>
     </t>
 </templates>

@@ -19,6 +19,7 @@ from . import registry_category as rcat
 
 class NodeDefinition(models.Model):
     _name = "nuidoai.node.definition"
+    _description = "Nuido AI Node Definition"
     _inherit = "nuido_base.node.definition"
 
     def action_open_chat_designer(self):

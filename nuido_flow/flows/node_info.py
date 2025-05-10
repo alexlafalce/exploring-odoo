@@ -11,8 +11,11 @@ from ..flows.core import conditional_node
 from ..flows.core import spread_node
 from ..flows.core import merge_node
 from ..flows.core import log_node
+from ..flows.core import mapper_node
 
 from ..flows.misc import random_number_node
+
+from .tools.mapper_tools import build_dict_map
 
 def getBasicInfo(node, edges):
     node_type = node["nodeType"]
@@ -66,6 +69,7 @@ def default_post_process(object, infos):
 # Start Node
 def build_start_node(node, edges):
     info = getDefaultInfo(node, edges)
+    info["parameters"] = node["parameters"]
 
     return info
 
@@ -110,6 +114,18 @@ def build_merge_node(node, edges):
 def create_merge_node(environment, create_function_registry, definitions, definition):
     return merge_node.MergeNode(environment, create_function_registry, definitions, definition)
 
+# Mapper Node
+def build_mapper_node(node, edges):
+    info = getDefaultInfo(node, edges)
+    info["map"] = node["map"]
+    info["dict_map"] = build_dict_map(node["map"])
+
+    return info
+
+def create_mapper_node(environment, create_function_registry, definitions, definition):
+    return mapper_node.MapperNode(environment, create_function_registry, definitions, definition)
+
+# MISC. NODES
 # Random Number Node
 def build_random_number_node(node, edges):
     info = getDefaultInfo(node, edges)

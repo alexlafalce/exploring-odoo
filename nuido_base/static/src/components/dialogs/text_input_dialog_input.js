@@ -8,15 +8,15 @@
 import { Component, useState } from "@odoo/owl";
 import { makeReactive } from "@nuido/utils/utils";
 import { useService } from "@web/core/utils/hooks";
-import { HtmlDialog } from "@nuido_base/components/dialogs/html_dialog";
-export class HtmlDialogInput extends Component {
+import { TextInputDialog } from "@nuido_base/components/dialogs/text_input_dialog";
+export class TextInputDialogInput extends Component {
     setup() {
         super.setup();
         this.dialog = useService("dialog");
         const state = {
             value: this.props.value
         };
-        this.state = useState(makeReactive(this, state, (_owner, data) => {
+        this.state = useState(makeReactive(this, state, (owner, data) => {
             this.props.onChanged(data.value);
         }));
     }
@@ -29,22 +29,23 @@ export class HtmlDialogInput extends Component {
         this.state.value = value;
     }
     async showDialog() {
-        this.dialog.add(HtmlDialog, {
-            id: `input-${this.props.id}-html`,
+        this.dialog.add(TextInputDialog, {
             title: this.props.label,
             initialValue: this.props.value,
             apply: this.updateText.bind(this)
         });
     }
 }
-HtmlDialogInput.template = "nuido_base.html-dialog-input";
-HtmlDialogInput.props = {
+TextInputDialogInput.template = "nuido_base.text-input-dialog-input";
+TextInputDialogInput.props = {
     ...Component.props,
     id: String,
     label: String,
     onChanged: Function,
-    value: { type: String, optional: true }
+    value: { type: String, optional: true },
+    hideValue: { type: Boolean, optional: true }
 };
-HtmlDialogInput.defaultProps = {
-    value: ""
+TextInputDialogInput.defaultProps = {
+    value: "",
+    hideValue: false
 };

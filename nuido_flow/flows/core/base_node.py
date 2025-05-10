@@ -7,7 +7,6 @@
 # DO NOT USE IT IN PRODUCTION.
 
 import typing
-from typing import Self
 from typing_extensions import Protocol
 
 from odoo.api import Environment

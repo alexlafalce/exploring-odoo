@@ -5,7 +5,7 @@
 // 
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 // DO NOT USE IT IN PRODUCTION.
-import { Node } from "@nuido/components/node";
-export class SpreadNode extends Node {
+import { Port } from "@nuido/components/port";
+export class StarterPort extends Port {
 }
-SpreadNode.template = "nuido_flow.spread-node";
+StarterPort.template = "nuido_flow.starter-port";

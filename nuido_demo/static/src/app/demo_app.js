@@ -5,7 +5,7 @@
 // 
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 // DO NOT USE IT IN PRODUCTION.
-import { useState } from "@odoo/owl";
+import { EventBus, useState } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
@@ -26,6 +26,10 @@ class NuidoDemoApp extends NuidoUi {
         ...standardActionServiceProps,
     };
     static components = { Document, Dropdown, DropdownItem, DemoNodeMenu };
+    static defaultProps = {
+        ...NuidoUi.defaultProps,
+        nbus: new EventBus()
+    };
     dialog;
     edgeState;
     actions;
@@ -114,28 +118,28 @@ class NuidoDemoApp extends NuidoUi {
         await new Promise(resolve => setTimeout(resolve, 500));
     }
     addDumbNode(x, y) {
-        this.state.env.bus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node", type: DumbNode.name, x: x, y: y });
+        this.state.env.nbus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node", type: DumbNode.name, x: x, y: y });
     }
     addDumbNodeNoInput(x, y) {
-        this.state.env.bus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Input", type: DumbNodeNoInput.name, x: x, y: y });
+        this.state.env.nbus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Input", type: DumbNodeNoInput.name, x: x, y: y });
     }
     addDumbNodeNoOutput(x, y) {
-        this.state.env.bus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Output", type: DumbNodeNoOutput.name, x: x, y: y });
+        this.state.env.nbus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - No Output", type: DumbNodeNoOutput.name, x: x, y: y });
     }
     addDumbNodeWithTextArea(x, y) {
-        this.state.env.bus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Textarea", type: DumbNodeWithTextArea.name, x: x, y: y });
+        this.state.env.nbus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Textarea", type: DumbNodeWithTextArea.name, x: x, y: y });
     }
     addDumbNodeMultipleOutputs(x, y) {
-        this.state.env.bus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Outputs", type: DumbNodeMultipleOutputs.name, x: x, y: y });
+        this.state.env.nbus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Outputs", type: DumbNodeMultipleOutputs.name, x: x, y: y });
     }
     addDumbNodeMultipleInputs(x, y) {
-        this.state.env.bus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Inputs", type: DumbNodeMultipleInputs.name, x: x, y: y });
+        this.state.env.nbus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Multiple Inputs", type: DumbNodeMultipleInputs.name, x: x, y: y });
     }
     addDumbSectionedNode(x, y) {
-        this.state.env.bus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Sectioned", type: DumbSectionedNode.name, x: x, y: y });
+        this.state.env.nbus.trigger(this.state.env.channel + "/new" /* DocumentEventType.new */, { title: "Node - Sectioned", type: DumbSectionedNode.name, x: x, y: y });
     }
     updateEdgeType() {
-        this.state.env.bus.trigger(this.state.env.channel + EdgeTypeEventType, {
+        this.state.env.nbus.trigger(this.state.env.channel + EdgeTypeEventType, {
             edgeType: this.edgeState.edgeType
         });
     }
@@ -157,7 +161,7 @@ class NuidoDemoApp extends NuidoUi {
         }
     }
     debug() {
-        this.state.env.bus.trigger(this.state.env.channel + DebugEventType);
+        this.state.env.nbus.trigger(this.state.env.channel + DebugEventType);
     }
 }
 registry.category("actions").add("NuidoDemoApp", NuidoDemoApp);

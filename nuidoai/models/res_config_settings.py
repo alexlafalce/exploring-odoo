@@ -11,7 +11,7 @@ from odoo import fields, models
 class ResCompany(models.Model):
     _inherit =  'res.company'
 
-    node_definition = fields.Many2one(string='Node Definition', comodel_name='nuido_base.node.definition', domain=[('is_processed', '=', True)])
+    node_definition = fields.Many2one(string='Node Definition', comodel_name='nuidoai.node.definition', domain=[('is_processed', '=', True)])
 
 
 class ResConfigSettings(models.TransientModel):

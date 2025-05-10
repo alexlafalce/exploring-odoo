@@ -13,10 +13,6 @@ export class TextInputDialog extends Component {
             text: this.props.initialValue
         });
     }
-    onClickCancel() {
-        this.props.cancel();
-        this.props.close();
-    }
     onClickApply() {
         if (this.state.text.trim() !== "") {
             this.props.apply(this.state.text);
@@ -33,8 +29,7 @@ TextInputDialog.components = { Dialog };
 TextInputDialog.props = {
     title: String,
     initialValue: String,
-    label: String,
+    label: { type: String, optional: true },
     apply: Function,
-    cancel: Function,
     close: Function,
 };

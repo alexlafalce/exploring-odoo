@@ -68,7 +68,7 @@ class MailNode(BaseNode):
                         **email_values,
                     })
                     mail.send()
-            except Exception as ex:
-                _logger.error(ex)
+            except:
+                _logger.warning("Exception while sending email.", exc_info=True)
 
-        return {}
+        return params

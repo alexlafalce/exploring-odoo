@@ -20,6 +20,7 @@ from ..flows.tools.tools import run_nodes
 
 class NodeDefinition(models.Model):
     _name = "nuido_flow.node.definition"
+    _description = "Nuido Flow Node Definition"
     _inherit = "nuido_base.node.definition"
 
     def _process_node_definitions(self):
@@ -84,14 +85,21 @@ class NodeDefinition(models.Model):
 
         return infos;
 
+    def _run(self, definitions, node_def, params):
+        create_function_registry = self.env["nuido_base.registry"].search_read([("category", "=", rcat.CREATE_FUNCTION)])
+        run_nodes(self.env, create_function_registry, definitions, node_def, params)
+
     def run(self, params):
         self.ensure_one()
         if not self.is_processed:
             raise Exception("Definition is not yet processed.")
 
         definitions = json.loads(self.definition)
-        create_function_registry = self.env["nuido_base.registry"].search_read([("category", "=", rcat.CREATE_FUNCTION)])
 
         node_def = next((o for o in definitions if o["type"] == "StartNode"), None)
         if node_def is not None:
-            run_nodes(self.env, create_function_registry, definitions, node_def, params)
+            parametersJson = {}
+            if len(node_def["parameters"].strip()) > 0:
+                parameters = node_def["parameters"]
+                parametersJson = json.loads(parameters)
+            self.with_context(run_params=params, start_params=parametersJson)._run(definitions, node_def, params)

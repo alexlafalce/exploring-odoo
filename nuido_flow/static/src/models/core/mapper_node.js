@@ -7,11 +7,21 @@
 // DO NOT USE IT IN PRODUCTION.
 import { NodeModel } from "@nuido/models/node";
 import { Default } from "@nuido/utils/registry";
-export class SpreadNodeModel extends NodeModel {
+import { uuidv4 } from "@nuido/utils/utils";
+export class MapItem {
+    constructor(id, name = "", value = "", parent_id = "") {
+        this.id = id;
+        this.name = name;
+        this.value = value;
+        this.parent_id = parent_id;
+    }
+}
+export class MapperNodeModel extends NodeModel {
     setup() {
         const inId = "in-" + this.id + "-1";
         this.addInPort(inId, Default, 1);
         const outId = "out-" + this.id + "-1";
-        this.addOutPort(outId, Default, Number.MAX_SAFE_INTEGER);
+        this.addOutPort(outId, Default, 1);
+        this.map = [new MapItem(uuidv4(), "maproot")];
     }
 }

@@ -18,6 +18,3 @@ class SpreadNode(BaseNode):
                     run_nodes(self.env, self.create_function_registry, self.definitions, node_def, params)
 
         return params
-
-    def get_next_node(self):
-        return self.next_node

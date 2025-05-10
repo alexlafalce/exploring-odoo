@@ -15,6 +15,7 @@ from markupsafe import Markup
 
 import json
 
+from odoo.tools.json import json_default
 from odoo.tools.rendering_tools import parse_inline_template, render_inline_template
 
 from odoo.addons.nuido_flow.flows.core.base_node import BaseNode
@@ -55,10 +56,10 @@ class MessageNode(BaseNode):
                 )
 
             if "is_debug" in self.env.context and self.env.context["is_debug"]:
-                msg = "Context:  \n```\n" + json.dumps(self.env.context, indent=4, default=vars) + "  \n```"
+                msg = "Context:  \n```\n" + json.dumps(self.env.context, indent=4, default=json_default) + "  \n```"
 
                 try:
-                    msg = msg + "  \n Params:  \n```" + json.dumps(params, indent=4, default=vars) + "  \n```"
+                    msg = msg + "  \n Params:  \n```" + json.dumps(params, indent=4, default=json_default) + "  \n```"
                 except Exception as e:
                     pass
 
@@ -68,4 +69,4 @@ class MessageNode(BaseNode):
                         message_type="comment"
                     )
 
-        return {}
+        return params

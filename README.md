@@ -65,7 +65,7 @@ If you like reading, visit [my github page](https://yonitjio.github.io).
 >
 
 >[!CAUTION]
-> _This branch is currently in active development, while the core/basic concepts doesn't change, **the codes are expected to be changed** depending on the issues I encounter while creating the video for them._
+> _This branch is currently in active development, while the core/basic concepts doesn't change, **the codes are expected to be changed**._
 >
 > _Also please note that there are no upgrade/update paths for these modules. Any updates will not consider the previous version._
 >
@@ -86,6 +86,7 @@ If you like reading, visit [my github page](https://yonitjio.github.io).
 | Nuido Flow Sales     | nuido_flow_sales     | Example addon for Nuido Flow                               |
 | Nuido Flow Messaging | nuido_flow_messaging | Messaging addon for Nuido Flow                             |
 | Nuido Flow Trigger   | nuido_flow_trigger   | Runs Nuido Flow with triggers.                             |
+| Nuido Flow Data      | nuido_flow_data      | Nuido Flow nodes for handling Odoo data.                   |
 
 # Contributing
 As mentioned above, this repo is only for archiving purpose, i.e., for reference, to learn Odoo, or as proof of concepts.

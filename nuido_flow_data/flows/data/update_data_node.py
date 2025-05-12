@@ -1,0 +1,76 @@
+# THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+# 
+# THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
+# DO NOT USE IT IN PRODUCTION.
+
+import logging
+
+_logger = logging.getLogger(__name__)
+
+from typing import Sequence
+
+from odoo.tools import safe_eval
+
+from odoo.addons.nuido_base.tools.function_tool import create_object
+from odoo.addons.nuido_flow.flows.core.base_node import BaseNode
+from odoo.addons.nuido_flow.flows.tools.tools import get_default_context_for_eval, get_active_record_info
+
+from .lookup_tools import get_lookup_nodes
+
+class UpdateDataNode(BaseNode):
+    def process(self, params):
+        super().process(params)
+
+        context = get_default_context_for_eval(self.env)
+        if params is not None:
+            context['params'] = params
+
+        info = get_active_record_info(self.env)
+        context = {**context, **info}
+
+        nodes, lookup_functions = get_lookup_nodes(self)
+
+        context["nodes"] = nodes
+        context["lookup"] = lookup_functions
+
+        ids_def = self.definition["ids"]
+        try:
+            ids = safe_eval.safe_eval(ids_def, context)
+        except:
+            _logger.warning("Exception on evaluation: %s", ids_def, exc_info=True)
+            ids = -1
+
+        if not isinstance(ids, Sequence):
+            ids = [ids]
+
+        model = self.definition["model"]
+        count = self.env[model].search_count([("id", "in", ids)])
+        if count > 0:
+            values = {}
+            for field in self.definition["fields"]:
+                try:
+                    value = safe_eval.safe_eval(field["value"], context)
+                except:
+                    _logger.warning("Exception on evaluation: %s", field["value"], exc_info=True)
+                    value = None
+
+                field = self.env["ir.model.fields"]._get(model, field["name"])
+                if field.ttype in ('one2many', 'many2many'):
+                    if type(value) == list:
+                        values.update({ field["name"]: value })
+                    else:
+                        values.update({ field["name"]: [value] })
+                else:
+                    values.update({ field["name"]: value })
+
+            records = self.env[model].browse(ids)
+            if (len(records) > 0 and records[0].id > -1):
+                for rec in records:
+                    rec.write(values)
+
+                return records
+
+        return self.env[model]

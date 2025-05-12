@@ -1,4 +1,4 @@
-# Nuido Flow Messaging Addon
+# Nuido Flow Data Addon
 > [!WARNING]
 > This module is purely experimental and for educational purpose use only.
 >
@@ -11,7 +11,7 @@
 > [!CAUTION]
 > Do not use this module unless you have reviewed the source codes thoroughly, understand what it does and in an experimental environment.
 
-This module add several nodes for messaging for Nuido Flow.
+This module adds Nuido Flow nodes for data handling.
 
 ## Please keep this repo alive by giving it a star and sharing it.
 

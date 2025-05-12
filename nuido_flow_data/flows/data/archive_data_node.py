@@ -1,0 +1,48 @@
+# THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
+# 
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+# 
+# THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
+# DO NOT USE IT IN PRODUCTION.
+
+import logging
+
+_logger = logging.getLogger(__name__)
+
+from typing import Sequence
+
+from odoo.tools import safe_eval
+from odoo.addons.nuido_flow.flows.core.base_node import BaseNode
+from odoo.addons.nuido_flow.flows.tools.tools import get_default_context_for_eval, get_active_record_info
+
+class ArchiveDataNode(BaseNode):
+    def process(self, params):
+        super().process(params)
+
+        context = get_default_context_for_eval(self.env)
+        if params is not None:
+            context['params'] = params
+
+        info = get_active_record_info(self.env)
+        context = {**context, **info}
+
+        ids_def = self.definition["ids"]
+        try:
+            ids = safe_eval.safe_eval(ids_def, context)
+        except:
+            _logger.warning("Exception on evaluation: %s", ids_def, exc_info=True)
+            ids = []
+
+        if not isinstance(ids, Sequence):
+            ids = [ids]
+
+        model = self.definition["model"]
+        count = self.env[model].search_count([("id", "in", ids)])
+        if count > 0:
+            records = self.env[model].browse(ids)
+            records.action_archive()
+
+            return records
+
+        return self.env[model]

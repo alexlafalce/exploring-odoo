@@ -1,13 +1,6 @@
 # Exploring Odoo
 This repository contains source codes presented in youtube channel [Exploring Odoo](https://www.youtube.com/@exploring-odoo)
 
-## Please keep this repo alive by giving it a star and sharing it.
-By giving this repo a star you are not only supporting and keeping this repo alive, but it also gives me the motivation to keep updating this repo.
-
-Click the star button on the right top to show your support:
-
-![Nuido AI](doc/images/starme.png)
-
 # Nuido Branch
 This branch is specific for Nuido related modules.
 
@@ -65,9 +58,7 @@ If you like reading, visit [my github page](https://yonitjio.github.io).
 >
 
 >[!CAUTION]
-> _This branch is currently in active development, while the core/basic concepts doesn't change, **the codes are expected to be changed**._
->
-> _Also please note that there are no upgrade/update paths for these modules. Any updates will not consider the previous version._
+> _Please note that there are no upgrade/update paths for these modules. Any updates will not consider the previous version._
 >
 > _Therefore if you want to use the updated version, you'll most likely need to uninstall the previous version first or install it on a new Odoo installation._
 >
@@ -93,4 +84,5 @@ As mentioned above, this repo is only for archiving purpose, i.e., for reference
 Therefore, I'm not accepting PRs for this repo.
 
 You are more than welcome to open discussion to share your thoughts, ideas, experiences or difficulties about modules in this repo.
-Please understand that my goal is to share my experiments and ideas, not to provide production ready modules.
+And it'll be great if you can give a star and share this repo to others.
+

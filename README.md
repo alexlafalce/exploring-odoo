@@ -9,7 +9,7 @@ Nuido is a library to create node based user interface for Odoo.
 
 If you're a visual learner, visit [Exploring Odoo Youtube Channel](https://www.youtube.com/@exploring-odoo) for more information.
 
-If you like reading, visit the documentation on [my github page](https://yonitjio.github.io).
+Visit [here](https://exploring-odoo.pages.dev) for documentation.
 
 If you find this useful, consider giving the repo a star ⭐️ — it helps keep the project visible and motivates continued work.
 

@@ -11,6 +11,7 @@ If you're a visual learner, visit [Exploring Odoo Youtube Channel](https://www.y
 
 If you like reading, visit the documentation on [my github page](https://yonitjio.github.io).
 
+If you find this useful, consider giving the repo a star ⭐️ — it helps keep the project visible and motivates continued work.
 
 > [!NOTE]
 > This branch requires you to be comfortable with Odoo frameworks such ash the ORM, OWL, Qweb, etc. You don't need to be an expert, but you still need to understand the basics.
@@ -62,6 +63,7 @@ If you like reading, visit the documentation on [my github page](https://yonitji
 >
 > _Therefore if you want to use the updated version, you'll most likely need to uninstall the previous version first or install it on a new Odoo installation._
 >
+> _Future updates will be community-driven. If this project adds value for you, a star helps prioritize ongoing development._
 
 # Experimental Odoo Modules
 

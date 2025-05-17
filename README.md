@@ -6,10 +6,22 @@ This branch is specific for Nuido related modules.
 
 Nuido is a library to create node based user interface for Odoo.
 
+## Core Concept
+Nuido's architecture is built around a set of core components and their associated models, providing the structure for creating diagrams and workflows. These components work together to manage visual representation, data, and connections within the application.
+
+```mermaid
+graph TD  
+    Document --> Node["Node"]  
+    Document --> Edge["Edge"]  
+    Node --> Port["Port"]  
+    Edge --> Path["Path"]  
+    Edge --> Joint["Joint"]  
+```
+
+Visit [here](https://exploring-odoo.pages.dev) for documentation.
 
 If you're a visual learner, visit [Exploring Odoo Youtube Channel](https://www.youtube.com/@exploring-odoo) for more information.
 
-Visit [here](https://exploring-odoo.pages.dev) for documentation.
 
 If you find this useful, consider giving the repo a star ⭐️ — it helps keep the project visible and motivates continued work.
 

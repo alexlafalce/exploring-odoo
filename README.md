@@ -18,9 +18,7 @@ graph TD
     Edge --> Joint["Joint"]  
 ```
 
-Visit [here](https://exploring-odoo.pages.dev) for documentation.
-
-If you're a visual learner, visit [Exploring Odoo Youtube Channel](https://www.youtube.com/@exploring-odoo) for more information.
+Visit the [documentation](https://exploring-odoo.pages.dev) for more details or if you're a visual learner, visit [Exploring Odoo Youtube Channel](https://www.youtube.com/@exploring-odoo).
 
 
 If you find this useful, consider giving the repo a star ⭐️ — it helps keep the project visible and motivates continued work.

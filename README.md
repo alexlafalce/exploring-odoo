@@ -88,6 +88,7 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | Nuido Flow Trigger   | nuido_flow_trigger   | Runs Nuido Flow with triggers.                             |
 | Nuido Flow Data      | nuido_flow_data      | Nuido Flow nodes for handling Odoo data.                   |
 | Nuido Flow AI        | nuido_flow_ai        | AI nodes for Nuido Flow.                                   |
+| Nuido Flow Owly      | nuido_flow_owly      | Example addon demonstrating external trigger with webhook. |
 
 # Contributing
 As mentioned above, this repo is only for archiving purpose, i.e., for reference, to learn Odoo, or as proof of concepts.

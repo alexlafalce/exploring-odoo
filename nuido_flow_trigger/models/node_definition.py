@@ -88,8 +88,10 @@ class NodeDefinition(models.Model):
         if (node_def is not None):
             trigger_node_def = next((
                         o for o in definitions if (
-                            o["type"].endswith("TriggerNode")
+                            len(o["next_nodes"]) > 0
                             and o["next_nodes"][0]["id"] == node_def["id"]
+                            and "role" in o["next_nodes"][0]["spec"]
+                            and o["next_nodes"][0]["spec"]["role"] == "trigger"
                         )
                     ), None
                 )
@@ -165,6 +167,9 @@ class NodeDefinition(models.Model):
 
         return res
 
+    def _before_process_trigger_node(self, rec, trigger_definition, trigger_node):
+        pass
+
     def _process_record(self, rec):
         super()._process_record(rec)
         trigger_definition, trigger_node = self._get_trigger_node(rec)
@@ -186,7 +191,10 @@ class NodeDefinition(models.Model):
             elif trigger_node.TRIGGER_METHOD_NAME in WEBHOOK_TRIGGERS:
                 rec.trigger_webhook_id = trigger_node.definition["webhook_id"]
 
+            self._before_process_trigger_node(rec, trigger_definition, trigger_node)
             trigger_node.process(rec)
+
+            return trigger_definition, trigger_node
 
     def _get_node_definition(self, records, trigger_method, trigger_field = None):
         domain = [('trigger_model_name', '=', records._name), ('trigger_method', '=', trigger_method)]
@@ -237,6 +245,7 @@ class NodeDefinition(models.Model):
                 try:
                     context = {
                         "uid": node_definition.create_uid.id,
+                        "user": node_definition.create_uid,
                         "is_debug": node_definition.create_uid.has_group('base.group_no_one'),
                         "active_node_definition_id": node_definition.id,
                     }

@@ -18,7 +18,7 @@ from odoo.addons.nuido_base.tools.function_tool import create_object
 from odoo.addons.nuido_flow.flows.core.base_node import BaseNode
 from odoo.addons.nuido_flow.flows.tools.tools import get_default_context_for_eval, get_active_record_info
 
-from .lookup_tools import get_lookup_nodes
+from .tools import get_lookup_nodes
 
 class UpdateDataNode(BaseNode):
     def process(self, params):

@@ -56,6 +56,28 @@
                             clip-path: polygon(50% -50%,100% 50%,50% 150%,0 50%);
                         }
                     }
+
+                    .data-filter-port {
+                        background-color: $nuido-port-border-color;
+                        transform: none;
+                        height: 15px;
+                        width: 15px;
+
+                        &::after {
+                            --r: 3px;
+                            transform: none;
+                            content: "";
+                            width: 11px;
+                            height: 11px;
+                            position: absolute;
+                            left: 10px;
+                            top: 10px;
+                            background: $teal-500;
+
+                            border-radius: 2px;
+                            mask: radial-gradient(var(--r) at var(--r),#0000 calc(100% - 1px),#000) calc(-1*var(--r));
+                        }
+                    }
                 }
             }
         }

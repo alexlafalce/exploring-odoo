@@ -9,7 +9,7 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 DO NOT USE IT IN PRODUCTION.
 -->
 <templates xml:space="preserve">
-    <t t-name="nuido_flow_sales.simple-ai" t-inherit="nuido.node" t-inherit-mode="primary">
+    <t t-name="nuido_flow_ai.assistant-agent-node" t-inherit="nuido.node" t-inherit-mode="primary">
         <xpath expr="//div[hasclass('node-content')]" position="inside">
             <div class="mb-2">
                 <TextDialogInput id="'system-message-' + props.node.id" label="'System Message'"
@@ -26,7 +26,7 @@ DO NOT USE IT IN PRODUCTION.
                 <label t-attf-id="label-{{props.node.id}}-is-html-result" t-att-for="isHtmlResultId" t-on-click="onIsHtmlResultChanged"
                     class="form-check-label ms-2 d-inline">Convert result to HTML</label>
             </div>
-            <div class="mb-2 form-check">
+            <div class="mb-2 form-check form-switch">
                 <input t-att-id="isStructuredInputId" type="checkbox" t-att-checked="props.node.is_structured" t-att-value="props.node.is_structured"
                     t-on-click="onIsStructuredOutputChanged"
                     class="form-check-input"/>
@@ -39,6 +39,14 @@ DO NOT USE IT IN PRODUCTION.
                         value="props.node.schema" onChanged.bind="onSchemaChanged"/>
                 </div>
             </t>
+            <div class="mb-2 form-check form-switch">
+                <input t-att-id="isReflectOnToolUseInputId" type="checkbox" t-att-checked="props.node.is_reflect_on_tool_use"
+                    t-att-value="props.node.is_reflect_on_tool_use"
+                    t-on-click="onIsReflectOnToolUseChanged"
+                    class="form-check-input"/>
+                <label t-attf-id="label-{{props.node.id}}-is-stateful" t-att-for="isReflectOnToolUseInputId" t-on-click="onIsReflectOnToolUseChanged"
+                    class="form-check-label ms-2 d-inline">Reflect On Tool Use</label>
+            </div>
         </xpath>
     </t>
 </templates>

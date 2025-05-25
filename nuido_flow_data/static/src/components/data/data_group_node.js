@@ -11,12 +11,20 @@ import { ModelSelectorEx } from "@nuido_flow/components/ui/model_selector_ex";
 import { ModelFieldSelectorEx } from "@nuido_flow/components/ui/model_field_selector_ex";
 import { ModelFieldTags } from "@nuido_flow/components/ui/model_field_tags";
 import { DomainDialogInput } from "@nuido_flow/components/ui/domain_dialog_input";
+import { UpdateDataModelEventType } from "@nuido_flow_data/components/data/events";
 export class DataGroupNode extends Node {
     setup() {
         super.setup();
         this.state = useState({
             model: this.props.node.model,
             modelDescription: this.props.node.model_description
+        });
+    }
+    updateFilterNodes() {
+        this.env.nbus.trigger(this.env.channel + UpdateDataModelEventType, {
+            id: this.props.node.id,
+            model: this.state.model,
+            modelDescription: this.state.modelDescription
         });
     }
     get modelSelectorId() {
@@ -29,6 +37,8 @@ export class DataGroupNode extends Node {
         this.state.modelDescription = label;
         this.props.node.model = technical;
         this.props.node.model_description = label;
+        this.updateFilterNodes();
+        this.refreshEdges();
     }
     onFieldDeleted(fieldName) {
         const idx = this.props.node.fields.findIndex(o => o.technical === fieldName);
@@ -43,15 +53,6 @@ export class DataGroupNode extends Node {
     }
     onDomainChanged(domain) {
         this.props.node.domain = domain;
-    }
-    dynamicDateFieldFilter(value) {
-        return value.searchable && (["date", "datetime"].find(o => o === value.type));
-    }
-    onDynamicDateFieldUpdate(path, info) {
-        this.props.node.dynamic_date_field = info.fieldDef ? info.fieldDef.name : "";
-    }
-    onDynamicDateIntervalChanged(ev) {
-        this.props.node.dynamic_date_interval = ev.target.value;
     }
     onOutputTypeChanged(ev) {
         this.props.node.output_type = ev.target.value;

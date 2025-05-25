@@ -41,6 +41,9 @@ export class ActiveDataNode extends Node {
     onDocumentDataUpdated() {
         this._updatePropsModel();
     }
+    get modelSelectorId() {
+        return `input-${this.props.node.id}-model-selector`;
+    }
 }
 ActiveDataNode.template = "nuido_flow_data.active-data-node";
 ActiveDataNode.components = {

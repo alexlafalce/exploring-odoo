@@ -20,6 +20,7 @@ class NuidoAiController(http.Controller):
 
         context = {
             "uid": env.user.id,
+            "user": env.user,
             "is_debug": env.user.has_group('base.group_no_one'),
             "active_node_definition_id": def_id,
         }

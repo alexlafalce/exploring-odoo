@@ -28,6 +28,9 @@ class BaseNode(FlowNode):
         self.definitions = definitions
         self.definition = definition
 
+        self.id = self.definition["id"]
+
+
     def process(self, params) -> any:
         if "next_nodes" in self.definition and len(self.definition["next_nodes"]) > 0:
             self.next_node_info = self.definition["next_nodes"][0]

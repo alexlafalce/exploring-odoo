@@ -12,10 +12,11 @@ _logger = logging.getLogger(__name__)
 import ast
 import pandas as pd
 
-from odoo import fields as fds, models
-from odoo.tools import date_utils as dtu, DEFAULT_SERVER_DATE_FORMAT
+from odoo import models
 
 from odoo.addons.nuido_flow.flows.core.base_node import BaseNode
+
+from .tools import get_data_filter_nodes
 
 class DataGroupNode(BaseNode):
     def process(self, params):
@@ -43,15 +44,10 @@ class DataGroupNode(BaseNode):
         domain = ast.literal_eval(self.definition["domain"])
         domain = domain + additional_domain
 
-        dynamic_date_field = self.definition["dynamic_date_field"]
-        dynamic_date_interval = self.definition["dynamic_date_interval"]
-
-        if dynamic_date_field != "" and dynamic_date_interval != "":
-            now = fds.Datetime.today()
-            dynamic_domain = [(dynamic_date_field, ">=" , dtu.start_of(now, dynamic_date_interval)),
-                            (dynamic_date_field, "<=", dtu.end_of(now, dynamic_date_interval))]
-
-            domain = domain + dynamic_domain
+        filter_nodes = get_data_filter_nodes(self)
+        for node in filter_nodes:
+            filter_domain = node.process({})
+            domain = domain + filter_domain["filter"]
 
         datetime_granularity = node_def["datetime_granularity"]
 

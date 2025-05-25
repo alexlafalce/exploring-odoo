@@ -6,7 +6,7 @@
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 // DO NOT USE IT IN PRODUCTION.
 import { Default } from "@nuido/utils/registry";
-import { SpecAwareNodeModel } from "@nuido_flow/models/core/spec_aware_node";
+import { SpecAwareNodeModel } from "@nuido/models/spec_aware_node";
 import { HttpHeaderPort } from "@nuido_flow_data/components/ports/http_header_port";
 export class SendDataNodeModel extends SpecAwareNodeModel {
     setup() {

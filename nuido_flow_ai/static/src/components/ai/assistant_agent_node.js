@@ -7,7 +7,7 @@
 // DO NOT USE IT IN PRODUCTION.
 import { Node } from "@nuido/components/node";
 import { TextDialogInput } from "@nuido_base/components/dialogs/text_dialog_input";
-export class SimpleAiNode extends Node {
+export class AssistantAgentNode extends Node {
     onPromptChanged(value) {
         this.props.node.prompt = value;
     }
@@ -24,6 +24,30 @@ export class SimpleAiNode extends Node {
         this.refreshEdges();
         this.props.node.schema = "";
     }
+    onIsReflectOnToolUseChanged(event) {
+        if (!this.props.node.is_reflect_on_tool_use) {
+            this.props.node.is_reflect_on_tool_use = true;
+        }
+        else {
+            this.props.node.is_reflect_on_tool_use = false;
+        }
+    }
+    onIsStreamingResponseChanged(event) {
+        if (!this.props.node.is_streaming) {
+            this.props.node.is_streaming = true;
+        }
+        else {
+            this.props.node.is_streaming = false;
+        }
+    }
+    onIsStatefulChanged(event) {
+        if (!this.props.node.is_stateful) {
+            this.props.node.is_stateful = true;
+        }
+        else {
+            this.props.node.is_stateful = false;
+        }
+    }
     onIsHtmlResultChanged(event) {
         if (!this.props.node.is_html_result) {
             this.props.node.is_html_result = true;
@@ -35,6 +59,8 @@ export class SimpleAiNode extends Node {
     onSchemaChanged(value) {
         this.props.node.schema = value;
     }
+    async onBeforeShowChatDialog() {
+    }
     get isHtmlResultId() {
         return `input-${this.props.node.id}-is-html-result`;
     }
@@ -42,8 +68,8 @@ export class SimpleAiNode extends Node {
         return `input-${this.props.node.id}-is-structured-output`;
     }
 }
-SimpleAiNode.template = "nuido_flow_sales.simple-ai";
-SimpleAiNode.components = {
+AssistantAgentNode.template = "nuido_flow_ai.assistant-agent-node";
+AssistantAgentNode.components = {
     ...Node.components,
     TextDialogInput
 };

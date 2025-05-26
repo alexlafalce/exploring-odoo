@@ -18,7 +18,6 @@ graph TD
 
 Visit the [documentation](https://exploring-odoo.pages.dev) for more details or if you're a visual learner, visit [Exploring Odoo Youtube Channel](https://www.youtube.com/@exploring-odoo).
 
-
 If you find this useful, consider giving the repo a star ⭐️ — it helps keep the project visible and motivates continued work.
 
 > [!NOTE]
@@ -89,6 +88,40 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | Nuido Flow Data      | nuido_flow_data      | Nuido Flow nodes for handling Odoo data.                   |
 | Nuido Flow AI        | nuido_flow_ai        | AI nodes for Nuido Flow.                                   |
 | Nuido Flow Owly      | nuido_flow_owly      | Example addon demonstrating external trigger with webhook. |
+
+## Summary
+Features implemented:
+#### Nuido
+- [x] Drag-n-drop to create node
+- [x] Multi select
+- [x] Move selected elements
+- [x] Delete selected elements
+- [x] Zoom level
+- [x] Serialization
+- [x] Joints to accomodate complex connection paths
+- [x] Tool to fix layout when changing theme
+- [x] Port with specification metadata
+- [x] Port with multiple connections
+- [x] Demo app
+
+#### Nuido AI
+- [x] Base app with Semantic Kernel
+- [x] Flexible chatbot configuration with Nuido AI
+- [x] Tool nodes
+- [x] Agent group
+- [x] Example addon
+
+#### Nuido Flow
+- [x] Base app with core Nodes
+- [x] Trigger Nodes
+- [x] Data Nodes
+- [x] AI Nodes
+- [x] Messaging Nodes
+- [x] Example addon
+
+## Roadmap
+- [ ] ???
+- [ ] ???
 
 # Contributing
 As mentioned above, this repo is only for archiving purpose, i.e., for reference, to learn Odoo, or as proof of concepts.

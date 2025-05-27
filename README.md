@@ -90,38 +90,27 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | Nuido Flow Owly      | nuido_flow_owly      | Example addon demonstrating external trigger with webhook. |
 
 ## Summary
-Features implemented:
-#### Nuido
-- [x] Drag-n-drop to create node
-- [x] Multi select
-- [x] Move selected elements
-- [x] Delete selected elements
-- [x] Zoom level
-- [x] Serialization
-- [x] Joints to accomodate complex connection paths
-- [x] Tool to fix layout when changing theme
-- [x] Port with specification metadata
-- [x] Port with multiple connections
-- [x] Demo app
+### Features implemented:
 
-#### Nuido AI
-- [x] Base app with Semantic Kernel
-- [x] Flexible chatbot configuration with Nuido AI
-- [x] Tool nodes
-- [x] Agent group
-- [x] Example addon
-
-#### Nuido Flow
-- [x] Base app with core Nodes
-- [x] Trigger Nodes
-- [x] Data Nodes
-- [x] AI Nodes
-- [x] Messaging Nodes
-- [x] Example addon
+| Nuido                                           | Nuido Ai                                       | Nuido Flow                 |
+| ----------------------------------------------- | ---------------------------------------------- | -------------------------- |
+| ☑️ Drag-n-drop to create node                    | ☑️ Base app with Semantic Kernel                | ☑️ Base app with core Nodes |
+| ☑️ Multi select                                  | ☑️ Flexible chatbot configuration with Nuido AI | ☑️ Trigger Nodes            |
+| ☑️ Move selected elements                        | ☑️ Tool nodes                                   | ☑️ Data Nodes               |
+| ☑️ Delete selected elements                      | ☑️ Agent group                                  | ☑️ AI Nodes                 |
+| ☑️ Zoom level                                    | ☑️ Example addon                                | ☑️ Messaging Nodes          |
+| ☑️ Serialization                                 |                                                | ☑️ Example addon            |
+| ☑️ Joints to accomodate complex connection paths |                                                |                            |
+| ☑️ Tool to fix layout when changing theme        |                                                |                            |
+| ☑️ Port with specification metadata              |                                                |                            |
+| ☑️ Port with multiple connections                |                                                |                            |
+| ☑️ Demo app                                      |                                                |                            |
 
 ## Roadmap
 - [ ] ???
 - [ ] ???
+- [ ] ???
+
 
 # Contributing
 As mentioned above, this repo is only for archiving purpose, i.e., for reference, to learn Odoo, or as proof of concepts.

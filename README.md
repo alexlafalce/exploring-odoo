@@ -121,4 +121,5 @@ You are more than welcome to open discussion to share your thoughts, ideas, expe
 And it'll be great if you can give a star and share this repo to others.
 
 # Special Thanks
-[![Stargazers repo roster for @yonitjio/exploring-odoo](https://reporoster.com/stars/dark/yonitjio/exploring-odoo)](https://github.com/yonitjio/exploring-odoo/stargazers)
+<!-- stargazers -->
+<!-- stargazers -->

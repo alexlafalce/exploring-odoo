@@ -119,7 +119,3 @@ Therefore, I'm not accepting PRs for this repo.
 You are more than welcome to open discussion to share your thoughts, ideas, experiences or difficulties about modules in this repo.
 
 And it'll be great if you can give a star and share this repo to others.
-
-# Special Thanks
-<!-- stargazers -->
-<!-- stargazers -->

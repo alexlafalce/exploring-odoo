@@ -86,6 +86,7 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | Nuido Flow Messaging | nuido_flow_messaging | Messaging addon for Nuido Flow                             |
 | Nuido Flow Trigger   | nuido_flow_trigger   | Runs Nuido Flow with triggers.                             |
 | Nuido Flow Data      | nuido_flow_data      | Nuido Flow nodes for handling Odoo data.                   |
+| Nuido Flow Jinja     | nuido_flow_jinja     | Use Jinja in Nuido Flow.                                   |
 | Nuido Flow AI        | nuido_flow_ai        | AI nodes for Nuido Flow.                                   |
 | Nuido Flow Owly      | nuido_flow_owly      | Example addon demonstrating external trigger with webhook. |
 

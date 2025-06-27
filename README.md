@@ -89,6 +89,7 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | Nuido Flow Jinja     | nuido_flow_jinja     | Use Jinja in Nuido Flow.                                   |
 | Nuido Flow AI        | nuido_flow_ai        | AI nodes for Nuido Flow.                                   |
 | Nuido Flow Owly      | nuido_flow_owly      | Example addon demonstrating external trigger with webhook. |
+| Nuido Flow Network   | nuido_flow_network   | Nodes for sending/receiving data over network              |
 
 ## Summary
 ### Features implemented:

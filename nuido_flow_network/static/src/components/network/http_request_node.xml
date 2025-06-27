@@ -9,7 +9,7 @@ THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 DO NOT USE IT IN PRODUCTION.
 -->
 <templates xml:space="preserve">
-    <t t-name="nuido_flow_sales.send-data-node" t-inherit="nuido.node" t-inherit-mode="primary">
+    <t t-name="nuido_flow_sales.http-request-node" t-inherit="nuido.node" t-inherit-mode="primary">
         <xpath expr="//div[hasclass('node-content')]" position="inside">
             <div class="mb-2">
                 <label t-attf-id="label-{{props.node.id}}-method" t-att-for="methodInputId">Method</label>
@@ -19,6 +19,19 @@ DO NOT USE IT IN PRODUCTION.
                 </select>
                 <TextInputDialogInput id="props.node.id" label="'URL'" value="props.node.url" onChanged.bind="onUrlChanged"/>
             </div>
+            <t t-if="props.node.method === 'GET'">
+                <div class="mb-2">
+                    <TextDialogInput id="'params' + props.node.id" label="'Params'" value="props.node.params" onChanged.bind="onParamsChanged"/>
+                </div>
+            </t>
+            <t t-if="props.node.method === 'POST'">
+                <div class="mb-2">
+                    <TextDialogInput id="'json' + props.node.id" label="'Json'" value="props.node.json" onChanged.bind="onJsonChanged"/>
+                </div>
+                <div class="mb-2">
+                    <TextDialogInput id="'data' + props.node.id" label="'Data'" value="props.node.data" onChanged.bind="onDataChanged"/>
+                </div>
+            </t>
         </xpath>
     </t>
 </templates>

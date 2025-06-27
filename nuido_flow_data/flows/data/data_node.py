@@ -1,8 +1,8 @@
 # THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-# 
+#
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
-# 
+#
 # THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 # DO NOT USE IT IN PRODUCTION.
 
@@ -32,7 +32,7 @@ class DataNode(BaseNode):
             domain = domain + filter_domain["filter"]
 
         field_infos = self.definition["fields"]
-        fields = [o["technical"] for o in field_infos]
+        fields = [o["value"] for o in field_infos]
 
         data = self.env[self.definition["model"]].search_read(domain, fields)
 

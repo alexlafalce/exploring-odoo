@@ -1,8 +1,8 @@
 # THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-# 
+#
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
-# 
+#
 # THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 # DO NOT USE IT IN PRODUCTION.
 import logging
@@ -13,6 +13,7 @@ import json
 from odoo import tools
 
 from autogen_core import CancellationToken, TRACE_LOGGER_NAME, EVENT_LOGGER_NAME
+from autogen_agentchat.base import TaskResult
 from autogen_agentchat.messages import TextMessage
 from autogen_agentchat.agents import AssistantAgent
 
@@ -45,7 +46,7 @@ class AssistantAgentNode(BaseNode):
         self.model_client = completion_node.process({
                 "is_structured": self.definition["is_structured"],
                 "schema": self.definition["schema"]
-            })
+            })["client"]
 
         self.tool_nodes = get_tool_nodes(self)
         self.tools = []
@@ -74,7 +75,7 @@ class AssistantAgentNode(BaseNode):
         return response
 
     async def _ask_ai(self, params):
-        response = {}
+        response = TaskResult(messages=[], stop_reason="None")
         try:
             context = self.env.context
 
@@ -89,6 +90,7 @@ class AssistantAgentNode(BaseNode):
             response = await self._do_ask_ai(message)
         except:
             _logger.error("Error processing message.", exc_info=True)
+            response = TaskResult(messages=[], stop_reason="Error asking AI.")
         finally:
             await self.model_client.close()
             if self.workbench is not None:
@@ -100,8 +102,9 @@ class AssistantAgentNode(BaseNode):
         super().process(params)
 
         res = run_async_function(self._ask_ai, params)
-        message_length = len(res.messages)
         result = ""
+
+        message_length = len(res.messages)
         if message_length > 0:
             result = res.messages[len(res.messages) - 1].content
 

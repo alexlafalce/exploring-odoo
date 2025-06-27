@@ -11,7 +11,7 @@
 > [!CAUTION]
 > Do not use this module unless you have reviewed the source codes thoroughly, understand what it does and in an experimental environment.
 
-This module adds Nuido Flow nodes for data handling.
+This module demonstrate using and modifying Odoo data with Nuido Flow.
 
 ## Please keep this repo alive by giving it a star and sharing it.
 

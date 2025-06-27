@@ -249,19 +249,24 @@ export class NuidoUi extends Component {
         }
     }
     onWheel(event) {
-        if (event.ctrlKey) {
-            if (event.deltaY > 0) {
-                this.zoom_out();
+        if (event.target.classList.contains("nuido-doc") ||
+            event.target.classList.contains("nuido-doc-container")) {
+            event.stopPropagation();
+            event.preventDefault();
+            if (event.ctrlKey) {
+                if (event.deltaY > 0) {
+                    this.zoom_out();
+                }
+                else {
+                    this.zoom_in();
+                }
+            }
+            else if (event.shiftKey) {
+                this.scroll_horizontal(-event.deltaY);
             }
             else {
-                this.zoom_in();
+                this.scroll_vertical(-event.deltaY);
             }
-        }
-        else if (event.shiftKey) {
-            this.scroll_horizontal(-event.deltaY);
-        }
-        else {
-            this.scroll_vertical(-event.deltaY);
         }
     }
     scroll_horizontal(delta) {

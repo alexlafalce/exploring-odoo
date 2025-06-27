@@ -1,8 +1,8 @@
 # THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-# 
+#
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
-# 
+#
 # THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 # DO NOT USE IT IN PRODUCTION.
 
@@ -21,6 +21,16 @@ class FlowNode(Protocol):
 
 
 class BaseNode(FlowNode):
+    """
+    Base class for all nodes in the flow.
+
+    Args:
+        environment (Environment): The Odoo environment.
+        create_function_registry (CreateFunctionRegistry): The registry of functions for creating nodes.
+        definitions (dict): The definitions of the nodes in the flow.
+        definition (dict): The definition of this node.
+
+    """
     def __init__(self, environment, create_function_registry, definitions, definition) -> None:
         self.next_node_info = None
         self.env: Environment = environment

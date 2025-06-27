@@ -1,8 +1,8 @@
 # THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-# 
+#
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
-# 
+#
 # THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 # DO NOT USE IT IN PRODUCTION.
 
@@ -42,4 +42,6 @@ class OpenAiChatCompletionClientNode(BaseNode):
                 model_info=ModelInfo(family="unknown", function_calling=True, json_output=True, vision=True, structured_output=True ),
             )
 
-        return client
+        return {
+            "client": client
+        }

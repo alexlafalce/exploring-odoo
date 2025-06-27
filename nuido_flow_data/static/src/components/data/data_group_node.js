@@ -1,8 +1,8 @@
 // THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-// 
+//
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-// 
+//
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 // DO NOT USE IT IN PRODUCTION.
 import { useState } from "@odoo/owl";
@@ -31,17 +31,17 @@ export class DataGroupNode extends Node {
         return `input-${this.props.node.id}-model-selector`;
     }
     onModelSelected(model) {
-        const { label, technical } = model;
+        const { label, technical: value } = model;
         this.props.node.fields = [];
-        this.state.model = technical;
+        this.state.model = value;
         this.state.modelDescription = label;
-        this.props.node.model = technical;
+        this.props.node.model = value;
         this.props.node.model_description = label;
         this.updateFilterNodes();
         this.refreshEdges();
     }
     onFieldDeleted(fieldName) {
-        const idx = this.props.node.fields.findIndex(o => o.technical === fieldName);
+        const idx = this.props.node.fields.findIndex(o => o.value === fieldName);
         if (idx > -1) {
             this.props.node.fields.splice(idx, 1);
         }

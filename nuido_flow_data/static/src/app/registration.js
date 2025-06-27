@@ -1,8 +1,8 @@
 // THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-// 
+//
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-// 
+//
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 // DO NOT USE IT IN PRODUCTION.
 import { registry } from "@web/core/registry";
@@ -19,8 +19,6 @@ import { UpdateActiveDataNode } from "@nuido_flow_data/components/data/update_ac
 import { UpdateActiveDataNodeModel } from "@nuido_flow_data/models/data/update_active_data_node";
 import { DataGroupNode } from "@nuido_flow_data/components/data/data_group_node";
 import { DataGroupNodeModel } from "@nuido_flow_data/models/data/data_group_node";
-import { SendDataNode } from "@nuido_flow_data/components/data/send_data_node";
-import { SendDataNodeModel } from "@nuido_flow_data/models/data/send_data_node";
 import { BrowseDataNode } from "@nuido_flow_data/components/data/browse_data_node";
 import { BrowseDataNodeModel } from "@nuido_flow_data/models/data/browse_data_node";
 import { CustomFieldStarterNode } from "@nuido_flow_data/components/starter/custom_field_starter_node";
@@ -37,12 +35,12 @@ import { ArchiveDataNode } from "@nuido_flow_data/components/data/archive_data_n
 import { ArchiveDataNodeModel } from "@nuido_flow_data/models/data/archive_data_node";
 import { LookupPort } from "@nuido_flow_data/components/ports/lookup_port";
 import { LookupPortModel } from "@nuido_flow_data/models/ports/lookup_port";
-import { HttpHeaderPort } from "@nuido_flow_data/components/ports/http_header_port";
-import { HttpHeaderPortModel } from "@nuido_flow_data/models/ports/http_header_port";
 import { DataFilterPort } from "@nuido_flow_data/components/ports/data_filter_port";
 import { DataFilterPortModel } from "@nuido_flow_data/models/ports/data_filter_port";
 import { DynamicDateFilterNode } from "@nuido_flow_data/components/data/dynamic_date_filter_node";
 import { DynamicDateFilterNodeModel } from "@nuido_flow_data/models/data/dynamic_date_filter_node";
+import { ActionNode } from "@nuido_flow_data/components/data/action_node";
+import { ActionNodeModel } from "@nuido_flow_data/models/data/action_node";
 // Odoo Nodes
 const nuidoNodeRegistry = registry.category(NuidoNodeRegistryName);
 nuidoNodeRegistry.add(DataNode.name, {
@@ -64,10 +62,6 @@ nuidoNodeRegistry.add(UpdateActiveDataNode.name, {
 nuidoNodeRegistry.add(RecordMapNode.name, {
     component: RecordMapNode,
     model: RecordMapNodeModel
-});
-nuidoNodeRegistry.add(SendDataNode.name, {
-    component: SendDataNode,
-    model: SendDataNodeModel
 });
 nuidoNodeRegistry.add(BrowseDataNode.name, {
     component: BrowseDataNode,
@@ -101,14 +95,14 @@ nuidoNodeRegistry.add(DynamicDateFilterNode.name, {
     component: DynamicDateFilterNode,
     model: DynamicDateFilterNodeModel
 });
+nuidoNodeRegistry.add(ActionNode.name, {
+    component: ActionNode,
+    model: ActionNodeModel
+});
 // Ports
 registry.category(NuidoPortRegistryName).add(LookupPort.name, {
     component: LookupPort,
     model: LookupPortModel
-});
-registry.category(NuidoPortRegistryName).add(HttpHeaderPort.name, {
-    component: HttpHeaderPort,
-    model: HttpHeaderPortModel
 });
 registry.category(NuidoPortRegistryName).add(DataFilterPort.name, {
     component: DataFilterPort,
@@ -151,11 +145,6 @@ odooNodeMenuItems.items.push({
     type: RecordMapNode.name
 });
 odooNodeMenuItems.items.push({
-    title: "Send Data",
-    icon: "/nuido_flow_data/static/images/upload.svg",
-    type: SendDataNode.name
-});
-odooNodeMenuItems.items.push({
     title: "Browse Data",
     icon: "/nuido_flow_data/static/images/select.svg",
     type: BrowseDataNode.name
@@ -194,4 +183,9 @@ odooNodeMenuItems.items.push({
     title: "Dynamic Date Filter",
     icon: "/nuido_flow_data/static/images/database-date.svg",
     type: DynamicDateFilterNode.name
+});
+odooNodeMenuItems.items.push({
+    title: "Action",
+    icon: "/nuido_flow_data/static/images/lightning.svg",
+    type: ActionNode.name
 });

@@ -1,8 +1,8 @@
 // THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-// 
+//
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
-// 
+//
 // THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 // DO NOT USE IT IN PRODUCTION.
 import { onMounted } from "@odoo/owl";
@@ -28,7 +28,7 @@ export class ActiveDataNode extends Node {
         this.refreshEdges();
     }
     onFieldDeleted(fieldName) {
-        const idx = this.props.node.fields.findIndex(o => o.technical === fieldName);
+        const idx = this.props.node.fields.findIndex(o => o.value === fieldName);
         if (idx > -1) {
             this.props.node.fields.splice(idx, 1);
         }

@@ -11,8 +11,7 @@
 > [!CAUTION]
 > Do not use this module unless you have reviewed the source codes thoroughly, understand what it does and in an experimental environment.
 
-This module demonstrate webhook authentication/authorization with Nuido Flow and Owly.
-Owly is an example app to demonstrate using Owl outside Odoo.
+This module demonstrate webhook validation with Nuido Flow and Owly.
 
 ## Please keep this repo alive by giving it a star and sharing it.
 

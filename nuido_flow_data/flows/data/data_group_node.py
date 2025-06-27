@@ -1,8 +1,8 @@
 # THIS FILE IS A PART OF PUBLIC REPOSITORY https://github.com/yonitjio/exploring-odoo
-# 
+#
 # This software is released under the MIT License.
 # https://opensource.org/licenses/MIT
-# 
+#
 # THIS SOFTWARE IS EXPERIMENTAL AND FOR EDUCATIONAL PURPOSE ONLY.
 # DO NOT USE IT IN PRODUCTION.
 
@@ -63,7 +63,7 @@ class DataGroupNode(BaseNode):
             group_by = f"{group_by}:{datetime_granularity}"
 
         for field_info in field_infos:
-            value_field_name = field_info["technical"]
+            value_field_name = field_info["value"]
             value_field_meta = self.env["ir.model.fields"]._get(model_name, value_field_name)
             value_field_metas.append(value_field_meta)
 

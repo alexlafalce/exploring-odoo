@@ -89,24 +89,25 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | Nuido Flow Jinja     | nuido_flow_jinja     | Use Jinja in Nuido Flow.                                   |
 | Nuido Flow AI        | nuido_flow_ai        | AI nodes for Nuido Flow.                                   |
 | Nuido Flow Owly      | nuido_flow_owly      | Example addon demonstrating external trigger with webhook. |
-| Nuido Flow Network   | nuido_flow_network   | Nodes for sending/receiving data over network              |
+| Nuido Flow Network   | nuido_flow_network   | Nodes for sending/receiving data over network.             |
+| Nuido Flow Shopify   | nuido_flow_shopify   | Shopify integration using Nuido Flow.                      |
 
 ## Summary
 ### Features implemented:
 
-| Nuido                                           | Nuido Ai                                       | Nuido Flow                 |
-| ----------------------------------------------- | ---------------------------------------------- | -------------------------- |
-| ☑️ Drag-n-drop to create node                    | ☑️ Base app with Semantic Kernel                | ☑️ Base app with core Nodes |
-| ☑️ Multi select                                  | ☑️ Flexible chatbot configuration with Nuido AI | ☑️ Trigger Nodes            |
-| ☑️ Move selected elements                        | ☑️ Tool nodes                                   | ☑️ Data Nodes               |
-| ☑️ Delete selected elements                      | ☑️ Agent group                                  | ☑️ AI Nodes                 |
-| ☑️ Zoom level                                    | ☑️ Example addon                                | ☑️ Messaging Nodes          |
-| ☑️ Serialization                                 |                                                | ☑️ Example addon            |
-| ☑️ Joints to accomodate complex connection paths |                                                |                            |
-| ☑️ Tool to fix layout when changing theme        |                                                |                            |
-| ☑️ Port with specification metadata              |                                                |                            |
-| ☑️ Port with multiple connections                |                                                |                            |
-| ☑️ Demo app                                      |                                                |                            |
+| Nuido                                                 | Nuido Ai                                             | Nuido Flow                       |
+| ----------------------------------------------------- | ---------------------------------------------------- | -------------------------------- |
+| &check; Drag-n-drop to create node                    | &check; Base app with Semantic Kernel                | &check; Base app with core Nodes |
+| &check; Multi select                                  | &check; Flexible chatbot configuration with Nuido AI | &check; Trigger Nodes            |
+| &check; Move selected elements                        | &check; Tool nodes                                   | &check; Data Nodes               |
+| &check; Delete selected elements                      | &check; Agent group                                  | &check; AI Nodes                 |
+| &check; Zoom level                                    | &check; Example addon                                | &check; Messaging Nodes          |
+| &check; Serialization                                 |                                                      | &check; Network Nodes            |
+| &check; Joints to accomodate complex connection paths |                                                      | &check; Jinja Nodes              |
+| &check; Tool to fix layout when changing theme        |                                                      | &check; Example addon            |
+| &check; Port with specification metadata              |                                                      |                                  |
+| &check; Port with multiple connections                |                                                      |                                  |
+| &check; Demo app                                      |                                                      |                                  |
 
 ## Roadmap
 - [ ] ???

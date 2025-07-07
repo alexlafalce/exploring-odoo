@@ -110,7 +110,7 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | &check; Demo app                                      |                                                      |                                  |
 
 ## Roadmap
-- [ ] Indicator for debug/tracing purposes.
+- [ ] Indicator for debugging/tracing purposes.
 - [ ] ???
 - [ ] ???
 

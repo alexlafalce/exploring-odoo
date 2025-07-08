@@ -111,6 +111,10 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 
 ## Roadmap
 - [ ] Indicator for debugging/tracing purposes.
+  <details>
+  <summary>Screenshot</summary>
+  <img src="./doc/images/nuido-monitoring-process.png" />
+  </details>
 - [ ] ???
 - [ ] ???
 

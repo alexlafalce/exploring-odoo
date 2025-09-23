@@ -110,15 +110,6 @@ If you find this useful, consider giving the repo a star ⭐️ — it helps kee
 | &check; Port with multiple connections                |                                                      |                                  |
 | &check; Demo app                                      |                                                      |                                  |
 
-## Roadmap
-- [ ] Indicator for debugging/tracing purposes (In progress).
-  <details>
-  <summary>Screenshot</summary>
-  <img src="./doc/images/nuido-monitoring-process.png" />
-  </details>
-- [ ] ???
-- [ ] ???
-
 
 # Contributing
 As mentioned above, this repo is only for archiving purpose, i.e., for reference, to learn Odoo, or as proof of concepts.
